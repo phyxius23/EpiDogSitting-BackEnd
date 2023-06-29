@@ -23,10 +23,10 @@ public class Address {
 	private String street;
 	private String city;
 	private String province;
-	private int postalCode;
+	private String postalCode;
 
 	// costruttore
-	public Address(String street, String city, String province, int postalCode) {
+	public Address(String street, String city, String province, String postalCode) {
 		this.street = street;
 		this.city = city;
 		this.province = province;

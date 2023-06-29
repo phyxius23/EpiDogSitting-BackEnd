@@ -20,13 +20,13 @@ public class AddressService {
 	AddressRepository addressRepo;
 
 	//***** CREATE *****
-	public Address create(AddressCreatePayload dsp) {
+	public Address create(AddressCreatePayload a) {
 		//		// se l'email è già presente nel DB lancio una eccezione
 		//		dogSitterRepo.findByEmail(dsp.getEmail()).ifPresent(dogsitter -> {
 		//			throw new BadRequestException("Email " + dogsitter.getEmail() + " già in uso!");
 		//		});
 
-		Address newAddress = new Address();
+		Address newAddress = new Address(a.getStreet(), a.getCity(), a.getProvince(), a.getPostalCode());
 
 		return addressRepo.save(newAddress);
 	}
@@ -45,7 +45,7 @@ public class AddressService {
 
 	// read by Id
 	public Address readById(UUID id) throws NotFoundException {
-		return addressRepo.findById(id).orElseThrow(() -> new NotFoundException("DogSitter non trovato"));
+		return addressRepo.findById(id).orElseThrow(() -> new NotFoundException("Indirizzo non trovato"));
 	}
 
 	//	// read by email

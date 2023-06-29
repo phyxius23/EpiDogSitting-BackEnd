@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -42,12 +43,10 @@ public abstract class User implements UserDetails {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	@OneToOne
+	@OneToOne(cascade = { CascadeType.ALL })
 	private Address address;
 
 	public User(String name, String surname, String email, String password, Address address) {
-		//super();
-		//this.userName = userName;
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
@@ -65,7 +64,7 @@ public abstract class User implements UserDetails {
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return this.email;
+		return this.email; // questo posso valorizzarlo a null?
 	}
 
 	@Override

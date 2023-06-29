@@ -9,6 +9,7 @@ import org.antoniotrentin.epidogsitting.entities.payloads.DogSitterCreatePayload
 import org.antoniotrentin.epidogsitting.entities.payloads.UserLoginPayload;
 import org.antoniotrentin.epidogsitting.exceptions.NotFoundException;
 import org.antoniotrentin.epidogsitting.exceptions.UnauthorizedException;
+import org.antoniotrentin.epidogsitting.services.AddressService;
 import org.antoniotrentin.epidogsitting.services.DogOwnerService;
 import org.antoniotrentin.epidogsitting.services.DogSitterService;
 import org.antoniotrentin.epidogsitting.services.UserService;
@@ -28,11 +29,15 @@ public class AuthController {
 
 	@Autowired
 	UserService userService;
+
 	@Autowired
 	DogSitterService dogSitterService;
 
 	@Autowired
 	DogOwnerService dogOwnerService;
+
+	@Autowired
+	AddressService addressService;
 
 	@Autowired
 	private PasswordEncoder bcrypt;
@@ -46,6 +51,8 @@ public class AuthController {
 	@PostMapping("/register/dogsitters")
 	public ResponseEntity<DogSitter> register(@RequestBody @Validated DogSitterCreatePayload body) {
 		body.setPassword(bcrypt.encode(body.getPassword()));
+
+		//Address newAddress = addressService.create(body.getAddress());
 
 		DogSitter createdDogSitter = dogSitterService.create(body);
 
