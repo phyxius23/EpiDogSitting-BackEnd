@@ -2,10 +2,10 @@ package org.antoniotrentin.epidogsitting.controllers;
 
 import java.util.UUID;
 
-import org.antoniotrentin.epidogsitting.entities.Dog;
-import org.antoniotrentin.epidogsitting.entities.payloads.DogCreatePayload;
+import org.antoniotrentin.epidogsitting.entities.Booking;
+import org.antoniotrentin.epidogsitting.entities.payloads.BookingCreatePayload;
 import org.antoniotrentin.epidogsitting.exceptions.NotFoundException;
-import org.antoniotrentin.epidogsitting.services.DogService;
+import org.antoniotrentin.epidogsitting.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -23,50 +23,51 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/dogs")
-@PreAuthorize("hasAuthority('DOGOWNER')")
-public class DogController {
+@RequestMapping("/bookings")
+@PreAuthorize("hasAuthority('DOGSITTER') or hasAuthority('DOGOWNER')")
+public class BookingController {
 
 	@Autowired
-	DogService dogService;
+	BookingService bookingService;
 
 	//***** CREATE *****
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Dog createDog(@RequestBody @Validated DogCreatePayload body) {
-		return dogService.create(body);
+	public Booking createBooking(@RequestBody @Validated BookingCreatePayload body) {
+		return bookingService.create(body);
 	}
 
 	//***** READ *****
 	@GetMapping("")
-	public Page<Dog> readDogs(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
-			@RequestParam(defaultValue = "id") String sortBy) {
-		return dogService.readAll(page, size, sortBy);
+	public Page<Booking> readBookings(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
+		return bookingService.readAll(page, size, sortBy);
 	}
 
 	//read by Id
 	@GetMapping("/{id}")
-	public Dog readDog(@PathVariable UUID id) throws Exception {
-		return dogService.readById(id);
+	public Booking readBooking(@PathVariable UUID id) throws Exception {
+		return bookingService.readById(id);
 	}
 
 	//read TEST
 	@GetMapping("/test")
-	public String readDogTest() {
-		return "Endpoint di Dog funzionante!!!";
+	public String readBookingTest() {
+		return "Endpoint di Booking funzionante!!!";
 	}
 
 	//***** UPDATE *****
 	@PutMapping("/{id}")
-	public Dog updateDog(@PathVariable UUID id, @RequestBody @Validated DogCreatePayload body) throws Exception {
-		return dogService.updateById(id, body);
+	public Booking updateBooking(@PathVariable UUID id, @RequestBody @Validated BookingCreatePayload body)
+			throws Exception {
+		return bookingService.updateById(id, body);
 	}
 
 	//***** DELETE *****
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteDog(@PathVariable UUID id) throws NotFoundException {
-		dogService.deleteById(id);
+	public void deleteBooking(@PathVariable UUID id) throws NotFoundException {
+		bookingService.deleteById(id);
 	}
 
 }

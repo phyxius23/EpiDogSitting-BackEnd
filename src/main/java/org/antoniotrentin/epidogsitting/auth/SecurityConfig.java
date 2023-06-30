@@ -28,9 +28,12 @@ public class SecurityConfig {
 		http.csrf(c -> c.disable()); //=> http.csrf(AbstractHttpConfigurer::disable);
 
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll());
-		http.authorizeHttpRequests(auth -> auth.requestMatchers("/dogsitters/**").authenticated());
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/addresses/**").authenticated());
+		http.authorizeHttpRequests(auth -> auth.requestMatchers("/bookings/**").authenticated());
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/dogs/**").authenticated());
+		http.authorizeHttpRequests(auth -> auth.requestMatchers("/dogowners/**").authenticated());
+		http.authorizeHttpRequests(auth -> auth.requestMatchers("/dogsitters/**").authenticated());
+		http.authorizeHttpRequests(auth -> auth.requestMatchers("/services/**").authenticated());
 		// http.authorizeHttpRequests(auth -> auth.requestMatchers("/users/**").hasRole(null));
 
 		// http.addFilterBefore(exceptionHandlerFilter, JWTAuthFilter.class);

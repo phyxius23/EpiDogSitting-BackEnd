@@ -52,13 +52,14 @@ public class OfferingController {
 
 	//read TEST
 	@GetMapping("/test")
-	public String readDogTest() {
-		return "Si è loggato!!!";
+	public String readOfferingTest() {
+		return "Endpoint di Offering funzionante!!!";
 	}
 
 	//***** UPDATE *****
 	@PutMapping("/{id}")
-	public Offering updateOffering(@PathVariable UUID id, @RequestBody OfferingCreatePayload body) throws Exception {
+	public Offering updateOffering(@PathVariable UUID id, @RequestBody @Validated OfferingCreatePayload body)
+			throws Exception {
 		return offeringService.updateById(id, body);
 	}
 

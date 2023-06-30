@@ -55,7 +55,7 @@ public class DogOwnerService {
 	}
 
 	//***** UPDATE *****
-	public DogOwner update(UUID id, DogOwnerCreatePayload d) throws NotFoundException {
+	public DogOwner updateById(UUID id, DogOwnerCreatePayload d) throws NotFoundException {
 		DogOwner dogOwnerFound = this.readById(id);
 
 		dogOwnerFound.setId(id);
@@ -68,7 +68,7 @@ public class DogOwnerService {
 	}
 
 	//***** DELETE *****
-	public void delete(UUID id) throws NotFoundException {
+	public void deleteById(UUID id) throws NotFoundException {
 		DogOwner dogOwnerFound = this.readById(id);
 
 		dogOwnerRepo.delete(dogOwnerFound);

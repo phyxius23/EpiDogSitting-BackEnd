@@ -50,9 +50,16 @@ public class AddressController {
 		return addressService.readById(id);
 	}
 
+	//read TEST
+	@GetMapping("/test")
+	public String readAddressTest() {
+		return "Endpoint di Address funzionante!!!";
+	}
+
 	//***** UPDATE *****
 	@PutMapping("/{id}")
-	public Address updateAddress(@PathVariable UUID id, @RequestBody AddressCreatePayload body) throws Exception {
+	public Address updateAddress(@PathVariable UUID id, @RequestBody @Validated AddressCreatePayload body)
+			throws Exception {
 		return addressService.updateById(id, body);
 	}
 
