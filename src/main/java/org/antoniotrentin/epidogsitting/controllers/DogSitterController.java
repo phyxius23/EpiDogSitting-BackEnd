@@ -26,15 +26,21 @@ public class DogSitterController {
 	//	@Autowired
 	//	private PasswordEncoder bcrypt;
 
+	@GetMapping("")
+	@PostAuthorize("hasAuthority('DOGSITTER')")
+	public String readDogSitters() {
+		return "Benvenuto!";
+	}
+
 	@GetMapping("/profile/{id}")
 	@PostAuthorize("hasAuthority('DOGSITTER')")
-	public DogSitter readUtente(@PathVariable UUID id) throws Exception {
+	public DogSitter readDogSitter(@PathVariable UUID id) throws Exception {
 		return dogSitterService.readById(id);
 	}
 
 	@DeleteMapping("/profile/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteUtente(@PathVariable UUID id) throws Exception {
+	public void deleteDogSitter(@PathVariable UUID id) throws Exception {
 		dogSitterService.delete(id);
 	}
 

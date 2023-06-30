@@ -27,8 +27,7 @@ public class DogSitterService {
 			throw new BadRequestException("Email " + dogsitter.getEmail() + " già in uso!");
 		});
 
-		DogSitter newDogSitter = new DogSitter(dsp.getName(), dsp.getSurname(), dsp.getEmail(), dsp.getPassword(),
-				dsp.getAddress());
+		DogSitter newDogSitter = new DogSitter(dsp.getName(), dsp.getSurname(), dsp.getEmail(), dsp.getPassword());
 
 		return dogSitterRepo.save(newDogSitter);
 	}

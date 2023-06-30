@@ -27,8 +27,7 @@ public class DogOwnerService {
 			throw new BadRequestException("Email " + dogowner.getEmail() + " già in uso!");
 		});
 
-		DogOwner newDogOwner = new DogOwner(dop.getName(), dop.getSurname(), dop.getEmail(), dop.getPassword(),
-				dop.getAddress());
+		DogOwner newDogOwner = new DogOwner(dop.getName(), dop.getSurname(), dop.getEmail(), dop.getPassword());
 
 		return dogOwnerRepo.save(newDogOwner);
 	}

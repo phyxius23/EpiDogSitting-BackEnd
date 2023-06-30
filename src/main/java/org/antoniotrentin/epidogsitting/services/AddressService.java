@@ -3,6 +3,7 @@ package org.antoniotrentin.epidogsitting.services;
 import java.util.UUID;
 
 import org.antoniotrentin.epidogsitting.entities.Address;
+import org.antoniotrentin.epidogsitting.entities.DogSitter;
 import org.antoniotrentin.epidogsitting.entities.payloads.AddressCreatePayload;
 import org.antoniotrentin.epidogsitting.exceptions.NotFoundException;
 import org.antoniotrentin.epidogsitting.repositories.AddressRepository;
@@ -19,12 +20,12 @@ public class AddressService {
 	@Autowired
 	AddressRepository addressRepo;
 
+	@Autowired
+	DogSitterService dogSitterService;
+
 	//***** CREATE *****
-	public Address create(AddressCreatePayload a) {
-		//		// se l'email è già presente nel DB lancio una eccezione
-		//		dogSitterRepo.findByEmail(dsp.getEmail()).ifPresent(dogsitter -> {
-		//			throw new BadRequestException("Email " + dogsitter.getEmail() + " già in uso!");
-		//		});
+	public Address create(AddressCreatePayload a, UUID id) {
+		DogSitter dogSitterFound = dogSitterService.readById(id);
 
 		Address newAddress = new Address(a.getStreet(), a.getCity(), a.getProvince(), a.getPostalCode());
 
@@ -48,13 +49,8 @@ public class AddressService {
 		return addressRepo.findById(id).orElseThrow(() -> new NotFoundException("Indirizzo non trovato"));
 	}
 
-	//	// read by email
-	//	public Address readByEmail(String email) throws NotFoundException {
-	//		return addressRepo.findByEmail(email).orElseThrow(() -> new NotFoundException("Email non trovata"));
-	//	}
-
 	//***** UPDATE *****
-	public Address update(UUID id, AddressCreatePayload ds) throws NotFoundException {
+	public Address updateById(UUID id, AddressCreatePayload ds) throws NotFoundException {
 		Address addressFound = this.readById(id);
 
 		addressFound.setId(id);
@@ -63,7 +59,7 @@ public class AddressService {
 	}
 
 	//***** DELETE *****
-	public void delete(UUID id) throws NotFoundException {
+	public void deleteById(UUID id) throws NotFoundException {
 		Address addressFound = this.readById(id);
 
 		addressRepo.delete(addressFound);

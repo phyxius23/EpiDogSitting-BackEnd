@@ -26,8 +26,8 @@ public class DogSitter extends User {
 	private List<Booking> bookings;
 
 	// costruttore
-	public DogSitter(String name, String surname, String email, String password, Address address) {
-		super(name, surname, email, password, address);
+	public DogSitter(String name, String surname, String email, String password) {
+		super(name, surname, email, password);
 		setRole(Role.DOGSITTER);
 	}
 

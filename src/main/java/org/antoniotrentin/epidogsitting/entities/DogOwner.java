@@ -29,8 +29,8 @@ public class DogOwner extends User {
 	private List<Booking> bookings;
 
 	// costruttore
-	public DogOwner(String name, String surname, String email, String password, Address address) {
-		super(name, surname, email, password, address);
+	public DogOwner(String name, String surname, String email, String password) {
+		super(name, surname, email, password);
 		setRole(Role.DOGOWNER);
 	}
 

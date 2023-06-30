@@ -33,9 +33,7 @@ public abstract class User implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private UUID id;
-	//private String userName;
 	private String name;
 	private String surname;
 	private String email;
@@ -46,12 +44,12 @@ public abstract class User implements UserDetails {
 	@OneToOne(cascade = { CascadeType.ALL })
 	private Address address;
 
-	public User(String name, String surname, String email, String password, Address address) {
+	public User(String name, String surname, String email, String password) {
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
 		this.password = password;
-		this.address = address;
+		this.address = null;
 		this.role = null;
 	}
 
@@ -70,25 +68,25 @@ public abstract class User implements UserDetails {
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
