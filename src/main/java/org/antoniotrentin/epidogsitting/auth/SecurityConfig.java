@@ -30,6 +30,7 @@ public class SecurityConfig {
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll());
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/dogsitters/**").authenticated());
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/addresses/**").authenticated());
+		http.authorizeHttpRequests(auth -> auth.requestMatchers("/dogs/**").authenticated());
 		// http.authorizeHttpRequests(auth -> auth.requestMatchers("/users/**").hasRole(null));
 
 		// http.addFilterBefore(exceptionHandlerFilter, JWTAuthFilter.class);

@@ -25,15 +25,15 @@ public class Booking {
 	@Id
 	@GeneratedValue
 	private UUID id;
-	private LocalDateTime starting;
-	private LocalDateTime ending;
+	private LocalDateTime startingDate;
+	private LocalDateTime endingDate;
 	@Enumerated(EnumType.STRING)
 	private StateBooking state;
 	private String message;
 	private double price;
 
 	@OneToOne
-	private Service service;
+	private Offering offering;
 
 	@ManyToOne
 	private DogSitter dogSitter;
@@ -42,15 +42,16 @@ public class Booking {
 	private DogOwner dogOwner;
 
 	// costruttore
-	public Booking(LocalDateTime starting, LocalDateTime ending, String message, double price, DogOwner dogOwner,
-			DogSitter dogSitter) {
-		this.starting = starting;
-		this.ending = ending;
-		this.state = StateBooking.IN_ATTESA;
+	public Booking(LocalDateTime startingDate, LocalDateTime endingDate, StateBooking state, String message, double price,
+			Offering offering, DogSitter dogSitter, DogOwner dogOwner) {
+		this.startingDate = startingDate;
+		this.endingDate = endingDate;
+		this.state = state;
 		this.message = message;
 		this.price = price;
-		this.dogOwner = dogOwner;
+		this.offering = offering;
 		this.dogSitter = dogSitter;
+		this.dogOwner = dogOwner;
 	}
 
 }

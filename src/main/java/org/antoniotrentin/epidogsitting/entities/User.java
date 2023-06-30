@@ -41,7 +41,7 @@ public abstract class User implements UserDetails {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	@OneToOne(cascade = { CascadeType.ALL })
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private Address address;
 
 	public User(String name, String surname, String email, String password) {

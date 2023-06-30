@@ -17,7 +17,7 @@ import lombok.Setter;
 public class DogSitter extends User {
 
 	@OneToMany(mappedBy = "dogSitter")
-	private List<Service> services;
+	private List<Offering> offerings;
 
 	@OneToMany(mappedBy = "dogSitter")
 	private List<Review> reviews;

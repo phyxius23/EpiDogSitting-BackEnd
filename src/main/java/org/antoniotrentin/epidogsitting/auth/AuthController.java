@@ -52,8 +52,6 @@ public class AuthController {
 	public ResponseEntity<DogSitter> register(@RequestBody @Validated DogSitterCreatePayload body) {
 		body.setPassword(bcrypt.encode(body.getPassword()));
 
-		//Address newAddress = addressService.create(body.getAddress());
-
 		DogSitter createdDogSitter = dogSitterService.create(body);
 
 		createdDogSitter.setPassword(body.getPassword());
@@ -61,10 +59,14 @@ public class AuthController {
 		return new ResponseEntity<DogSitter>(createdDogSitter, HttpStatus.CREATED);
 	}
 
-	@PostMapping("/register/dogowner")
+	@PostMapping("/register/dogowners")
 	public ResponseEntity<DogOwner> register(@RequestBody @Validated DogOwnerCreatePayload body) {
 		body.setPassword(bcrypt.encode(body.getPassword()));
+
 		DogOwner createdDogOwner = dogOwnerService.create(body);
+
+		createdDogOwner.setPassword(body.getPassword());
+
 		return new ResponseEntity<DogOwner>(createdDogOwner, HttpStatus.CREATED);
 	}
 
@@ -72,7 +74,7 @@ public class AuthController {
 	public ResponseEntity<AuthenticationSuccessfullPayload> login(@RequestBody UserLoginPayload body)
 			throws NotFoundException {
 
-		//User user = userService.findByUserName(body.getUserName());
+		//		User user = userService.findByUserName(body.getUserName());
 		User user = userService.findByEmail(body.getEmail());
 		System.out.println(user);
 

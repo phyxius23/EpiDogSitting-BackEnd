@@ -21,13 +21,13 @@ public class DogOwnerService {
 	DogOwnerRepository dogOwnerRepo;
 
 	// ***** CREATE *****
-	public DogOwner create(DogOwnerCreatePayload dop) {
+	public DogOwner create(DogOwnerCreatePayload d) {
 		// se l'email è già presente nel DB lancio una eccezione
-		dogOwnerRepo.findByEmail(dop.getEmail()).ifPresent(dogowner -> {
+		dogOwnerRepo.findByEmail(d.getEmail()).ifPresent(dogowner -> {
 			throw new BadRequestException("Email " + dogowner.getEmail() + " già in uso!");
 		});
 
-		DogOwner newDogOwner = new DogOwner(dop.getName(), dop.getSurname(), dop.getEmail(), dop.getPassword());
+		DogOwner newDogOwner = new DogOwner(d.getName(), d.getSurname(), d.getEmail(), d.getPassword());
 
 		return dogOwnerRepo.save(newDogOwner);
 	}
@@ -55,14 +55,14 @@ public class DogOwnerService {
 	}
 
 	//***** UPDATE *****
-	public DogOwner update(UUID id, DogOwnerCreatePayload ds) throws NotFoundException {
+	public DogOwner update(UUID id, DogOwnerCreatePayload d) throws NotFoundException {
 		DogOwner dogOwnerFound = this.readById(id);
 
 		dogOwnerFound.setId(id);
-		dogOwnerFound.setName(ds.getName());
-		dogOwnerFound.setSurname(ds.getSurname());
-		dogOwnerFound.setEmail(ds.getEmail());
-		dogOwnerFound.setPassword(ds.getPassword());
+		dogOwnerFound.setName(d.getName());
+		dogOwnerFound.setSurname(d.getSurname());
+		dogOwnerFound.setEmail(d.getEmail());
+		dogOwnerFound.setPassword(d.getPassword());
 
 		return dogOwnerRepo.save(dogOwnerFound);
 	}

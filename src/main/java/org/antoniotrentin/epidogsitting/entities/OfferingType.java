@@ -1,5 +1,5 @@
 package org.antoniotrentin.epidogsitting.entities;
 
-public enum ServiceType {
+public enum OfferingType {
 	PASSEGGIATA, ASILO_DIURNO, PERNOTTAMENTO
 }

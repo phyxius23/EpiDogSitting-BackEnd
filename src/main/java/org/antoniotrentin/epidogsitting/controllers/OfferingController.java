@@ -2,10 +2,10 @@ package org.antoniotrentin.epidogsitting.controllers;
 
 import java.util.UUID;
 
-import org.antoniotrentin.epidogsitting.entities.Address;
-import org.antoniotrentin.epidogsitting.entities.payloads.AddressCreatePayload;
+import org.antoniotrentin.epidogsitting.entities.Offering;
+import org.antoniotrentin.epidogsitting.entities.payloads.OfferingCreatePayload;
 import org.antoniotrentin.epidogsitting.exceptions.NotFoundException;
-import org.antoniotrentin.epidogsitting.services.AddressService;
+import org.antoniotrentin.epidogsitting.services.OfferingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -23,44 +23,50 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/addresses")
-@PreAuthorize("hasAuthority('DOGSITTER') or hasAuthority('DOGOWNER')")
-public class AddressController {
+@RequestMapping("/services")
+@PreAuthorize("hasAuthority('DOGSITTER')")
+public class OfferingController {
 
 	@Autowired
-	AddressService addressService;
+	OfferingService offeringService;
 
 	//***** CREATE *****
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Address createAddress(@RequestBody @Validated AddressCreatePayload body) {
-		return addressService.create(body);
+	public Offering createOffering(@RequestBody @Validated OfferingCreatePayload body) {
+		return offeringService.create(body);
 	}
 
 	//***** READ *****
 	@GetMapping("")
-	public Page<Address> readAddresses(@RequestParam(defaultValue = "0") int page,
+	public Page<Offering> readOfferings(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
-		return addressService.readAll(page, size, sortBy);
+		return offeringService.readAll(page, size, sortBy);
 	}
 
 	//read by Id
 	@GetMapping("/{id}")
-	public Address readAddress(@PathVariable UUID id) throws Exception {
-		return addressService.readById(id);
+	public Offering readOffering(@PathVariable UUID id) throws Exception {
+		return offeringService.readById(id);
+	}
+
+	//read TEST
+	@GetMapping("/test")
+	public String readDogTest() {
+		return "Si è loggato!!!";
 	}
 
 	//***** UPDATE *****
 	@PutMapping("/{id}")
-	public Address updateAddress(@PathVariable UUID id, @RequestBody AddressCreatePayload body) throws Exception {
-		return addressService.updateById(id, body);
+	public Offering updateOffering(@PathVariable UUID id, @RequestBody OfferingCreatePayload body) throws Exception {
+		return offeringService.updateById(id, body);
 	}
 
 	//***** DELETE *****
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteAddress(@PathVariable UUID id) throws NotFoundException {
-		addressService.deleteById(id);
+	public void deleteOffering(@PathVariable UUID id) throws NotFoundException {
+		offeringService.deleteById(id);
 	}
 
 }

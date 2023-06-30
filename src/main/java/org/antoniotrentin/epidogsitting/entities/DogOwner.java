@@ -16,6 +16,8 @@ import lombok.Setter;
 @Table(name = "dogowners")
 public class DogOwner extends User {
 
+	//@JsonManagedReference
+	//@JsonBackReference
 	@OneToMany(mappedBy = "dogOwner")
 	private List<Dog> dogs;
 

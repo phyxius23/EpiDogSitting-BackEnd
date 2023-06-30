@@ -3,7 +3,7 @@ package org.antoniotrentin.epidogsitting.services;
 import java.util.UUID;
 
 import org.antoniotrentin.epidogsitting.entities.Address;
-import org.antoniotrentin.epidogsitting.entities.DogSitter;
+import org.antoniotrentin.epidogsitting.entities.User;
 import org.antoniotrentin.epidogsitting.entities.payloads.AddressCreatePayload;
 import org.antoniotrentin.epidogsitting.exceptions.NotFoundException;
 import org.antoniotrentin.epidogsitting.repositories.AddressRepository;
@@ -21,13 +21,13 @@ public class AddressService {
 	AddressRepository addressRepo;
 
 	@Autowired
-	DogSitterService dogSitterService;
+	UserService userService;
 
 	//***** CREATE *****
-	public Address create(AddressCreatePayload a, UUID id) {
-		DogSitter dogSitterFound = dogSitterService.readById(id);
+	public Address create(AddressCreatePayload a) {
+		User userFound = userService.findById(a.getUser());
 
-		Address newAddress = new Address(a.getStreet(), a.getCity(), a.getProvince(), a.getPostalCode());
+		Address newAddress = new Address(a.getStreet(), a.getCity(), a.getProvince(), a.getPostalCode(), userFound);
 
 		return addressRepo.save(newAddress);
 	}
@@ -50,10 +50,15 @@ public class AddressService {
 	}
 
 	//***** UPDATE *****
-	public Address updateById(UUID id, AddressCreatePayload ds) throws NotFoundException {
+	public Address updateById(UUID id, AddressCreatePayload a) throws NotFoundException {
 		Address addressFound = this.readById(id);
 
 		addressFound.setId(id);
+		addressFound.setStreet(a.getStreet());
+		addressFound.setCity(a.getCity());
+		addressFound.setProvince(a.getProvince());
+		addressFound.setPostalCode(a.getPostalCode());
+		addressFound.setUser(userService.findById(a.getUser()));
 
 		return addressRepo.save(addressFound);
 	}

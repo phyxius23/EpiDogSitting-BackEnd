@@ -21,13 +21,13 @@ public class DogSitterService {
 	DogSitterRepository dogSitterRepo;
 
 	// ***** CREATE *****
-	public DogSitter create(DogSitterCreatePayload dsp) {
+	public DogSitter create(DogSitterCreatePayload d) {
 		// se l'email è già presente nel DB lancio una eccezione
-		dogSitterRepo.findByEmail(dsp.getEmail()).ifPresent(dogsitter -> {
+		dogSitterRepo.findByEmail(d.getEmail()).ifPresent(dogsitter -> {
 			throw new BadRequestException("Email " + dogsitter.getEmail() + " già in uso!");
 		});
 
-		DogSitter newDogSitter = new DogSitter(dsp.getName(), dsp.getSurname(), dsp.getEmail(), dsp.getPassword());
+		DogSitter newDogSitter = new DogSitter(d.getName(), d.getSurname(), d.getEmail(), d.getPassword());
 
 		return dogSitterRepo.save(newDogSitter);
 	}
@@ -55,14 +55,14 @@ public class DogSitterService {
 	}
 
 	//***** UPDATE *****
-	public DogSitter update(UUID id, DogSitterCreatePayload ds) throws NotFoundException {
+	public DogSitter update(UUID id, DogSitterCreatePayload d) throws NotFoundException {
 		DogSitter dogSitterFound = this.readById(id);
 
 		dogSitterFound.setId(id);
-		dogSitterFound.setName(ds.getName());
-		dogSitterFound.setSurname(ds.getSurname());
-		dogSitterFound.setEmail(ds.getEmail());
-		dogSitterFound.setPassword(ds.getPassword());
+		dogSitterFound.setName(d.getName());
+		dogSitterFound.setSurname(d.getSurname());
+		dogSitterFound.setEmail(d.getEmail());
+		dogSitterFound.setPassword(d.getPassword());
 
 		return dogSitterRepo.save(dogSitterFound);
 	}

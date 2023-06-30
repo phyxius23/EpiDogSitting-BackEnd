@@ -3,6 +3,8 @@ package org.antoniotrentin.epidogsitting.entities;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -15,20 +17,21 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "services")
-public class Service {
+@Table(name = "offerings")
+public class Offering {
 
 	@Id
 	@GeneratedValue
 	private UUID id;
-	private ServiceType type;
+	@Enumerated(EnumType.STRING)
+	private OfferingType type;
 	private double price;
 
 	@ManyToOne
 	private DogSitter dogSitter;
 
 	// costruttore
-	public Service(ServiceType type, double price, DogSitter dogSitter) {
+	public Offering(OfferingType type, double price, DogSitter dogSitter) {
 		this.type = type;
 		this.price = price;
 		this.dogSitter = dogSitter;

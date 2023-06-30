@@ -50,6 +50,12 @@ public class DogController {
 		return dogService.readById(id);
 	}
 
+	//read TEST
+	@GetMapping("/test")
+	public String readDogTest() {
+		return "Si è loggato!!!";
+	}
+
 	//***** UPDATE *****
 	@PutMapping("/{id}")
 	public Dog updateDog(@PathVariable UUID id, @RequestBody DogCreatePayload body) throws Exception {
