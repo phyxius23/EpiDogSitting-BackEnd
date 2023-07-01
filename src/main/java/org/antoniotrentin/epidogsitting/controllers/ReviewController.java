@@ -2,13 +2,14 @@ package org.antoniotrentin.epidogsitting.controllers;
 
 import java.util.UUID;
 
-import org.antoniotrentin.epidogsitting.entities.Offering;
-import org.antoniotrentin.epidogsitting.entities.payloads.OfferingCreatePayload;
+import org.antoniotrentin.epidogsitting.entities.Review;
+import org.antoniotrentin.epidogsitting.entities.payloads.ReviewCreatePayload;
 import org.antoniotrentin.epidogsitting.exceptions.NotFoundException;
-import org.antoniotrentin.epidogsitting.services.OfferingService;
+import org.antoniotrentin.epidogsitting.services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,51 +24,54 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/offerings")
-@PreAuthorize("hasAuthority('DOGSITTER')")
-public class OfferingController {
+@RequestMapping("/reviews")
+@PreAuthorize("hasAuthority('DOGSITTER') or hasAuthority('DOGOWNER')")
+public class ReviewController {
 
 	@Autowired
-	OfferingService offeringService;
+	ReviewService reviewService;
 
 	//***** CREATE *****
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Offering createOffering(@RequestBody @Validated OfferingCreatePayload body) {
-		return offeringService.create(body);
+	@PostAuthorize("hasAuthority('DOGOWNER')")
+	public Review createReview(@RequestBody @Validated ReviewCreatePayload body) {
+		return reviewService.create(body);
 	}
 
 	//***** READ *****
 	@GetMapping("")
-	public Page<Offering> readOfferings(@RequestParam(defaultValue = "0") int page,
+	public Page<Review> readReviews(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
-		return offeringService.readAll(page, size, sortBy);
+		return reviewService.readAll(page, size, sortBy);
 	}
 
 	//read by Id
 	@GetMapping("/{id}")
-	public Offering readOffering(@PathVariable UUID id) throws Exception {
-		return offeringService.readById(id);
+	public Review readReview(@PathVariable UUID id) throws Exception {
+		return reviewService.readById(id);
 	}
 
 	//read TEST
 	@GetMapping("/test")
-	public String readOfferingTest() {
-		return "Endpoint di Offering funzionante!!!";
+	//@PostAuthorize("hasAuthority('DOGOWNER')")
+	public String readReviewTest() {
+		return "Endpoint di Review funzionante!!!";
 	}
 
 	//***** UPDATE *****
 	@PutMapping("/{id}")
-	public Offering updateOffering(@PathVariable UUID id, @RequestBody @Validated OfferingCreatePayload body)
-			throws Exception {
-		return offeringService.updateById(id, body);
+	@PostAuthorize("hasAuthority('DOGOWNER')")
+	public Review updateReview(@PathVariable UUID id, @RequestBody @Validated ReviewCreatePayload body) throws Exception {
+		return reviewService.updateById(id, body);
 	}
 
 	//***** DELETE *****
 	@DeleteMapping("/{id}")
+	@PostAuthorize("hasAuthority('DOGOWNER')")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteOffering(@PathVariable UUID id) throws NotFoundException {
-		offeringService.deleteById(id);
+	public void deleteReview(@PathVariable UUID id) throws NotFoundException {
+		reviewService.deleteById(id);
 	}
 
 }

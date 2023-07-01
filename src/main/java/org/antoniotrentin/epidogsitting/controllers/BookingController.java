@@ -9,6 +9,7 @@ import org.antoniotrentin.epidogsitting.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,6 +34,7 @@ public class BookingController {
 	//***** CREATE *****
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)
+	@PostAuthorize("hasAuthority('DOGOWNER')")
 	public Booking createBooking(@RequestBody @Validated BookingCreatePayload body) {
 		return bookingService.create(body);
 	}

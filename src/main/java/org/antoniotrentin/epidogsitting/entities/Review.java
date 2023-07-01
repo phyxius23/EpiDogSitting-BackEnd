@@ -2,7 +2,7 @@ package org.antoniotrentin.epidogsitting.entities;
 
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,11 +28,11 @@ public class Review {
 	private String comment;
 
 	@ManyToOne
-	@JsonManagedReference
+	@JsonBackReference
 	private DogSitter dogSitter;
 
 	@ManyToOne
-	@JsonManagedReference
+	@JsonBackReference
 	private DogOwner dogOwner;
 
 	// costruttore

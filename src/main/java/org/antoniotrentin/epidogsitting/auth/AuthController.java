@@ -76,7 +76,6 @@ public class AuthController {
 
 		//		User user = userService.findByUserName(body.getUserName());
 		User user = userService.findByEmail(body.getEmail());
-		System.out.println(user);
 
 		String plainPW = body.getPassword();
 		String hashedPW = user.getPassword();
