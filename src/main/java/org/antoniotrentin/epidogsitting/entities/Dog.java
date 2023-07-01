@@ -2,7 +2,7 @@ package org.antoniotrentin.epidogsitting.entities;
 
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,10 +29,11 @@ public class Dog {
 	private int weight;
 	private String description;
 
-	@JsonIgnore
+	//@JsonIgnore
 	//@JsonBackReference
 	//@JsonManagedReference
 	@ManyToOne
+	@JsonManagedReference
 	private DogOwner dogOwner;
 
 	// costruttore

@@ -3,6 +3,8 @@ package org.antoniotrentin.epidogsitting.entities;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -36,9 +38,11 @@ public class Booking {
 	private Offering offering;
 
 	@ManyToOne
+	@JsonManagedReference
 	private DogSitter dogSitter;
 
 	@ManyToOne
+	@JsonManagedReference
 	private DogOwner dogOwner;
 
 	// costruttore

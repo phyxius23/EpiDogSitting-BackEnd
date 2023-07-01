@@ -2,6 +2,8 @@ package org.antoniotrentin.epidogsitting.entities;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -28,6 +30,7 @@ public class Offering {
 	private double price;
 
 	@ManyToOne
+	@JsonManagedReference
 	private DogSitter dogSitter;
 
 	// costruttore

@@ -2,6 +2,8 @@ package org.antoniotrentin.epidogsitting.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -19,15 +21,19 @@ public class DogOwner extends User {
 	//@JsonManagedReference
 	//@JsonBackReference
 	@OneToMany(mappedBy = "dogOwner")
+	@JsonBackReference
 	private List<Dog> dogs;
 
 	@OneToMany(mappedBy = "dogOwner")
+	@JsonBackReference
 	private List<Favorite> favorites;
 
 	@OneToMany(mappedBy = "dogOwner")
+	@JsonBackReference
 	private List<Review> reviews;
 
 	@OneToMany(mappedBy = "dogOwner")
+	@JsonBackReference
 	private List<Booking> bookings;
 
 	// costruttore

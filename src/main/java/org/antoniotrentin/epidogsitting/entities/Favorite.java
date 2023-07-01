@@ -2,6 +2,8 @@ package org.antoniotrentin.epidogsitting.entities;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -23,9 +25,11 @@ public class Favorite {
 	private UUID id;
 
 	@ManyToOne
+	@JsonManagedReference
 	private DogSitter dogSitter;
 
 	@ManyToOne
+	@JsonManagedReference
 	private DogOwner dogOwner;
 
 }
