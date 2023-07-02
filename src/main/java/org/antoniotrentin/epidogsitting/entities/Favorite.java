@@ -32,4 +32,9 @@ public class Favorite {
 	@JsonBackReference
 	private DogOwner dogOwner;
 
+	public Favorite(DogSitter dogSitter, DogOwner dogOwner) {
+		this.dogSitter = dogSitter;
+		this.dogOwner = dogOwner;
+	}
+
 }

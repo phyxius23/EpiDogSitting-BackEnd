@@ -40,7 +40,6 @@ public class BookingCreatePayload {
 			@NotNull(message = "Il proprietario è obbligatorio") UUID dogOwner,
 			@NotNull(message = "Il dogsitter è obbligatorio") UUID dogSitter,
 			@NotNull(message = "Il servizio è obbligatorio") UUID offering) {
-		super();
 		this.startingDate = startingDate;
 		this.endingDate = endingDate;
 		this.state = state;
