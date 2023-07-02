@@ -7,6 +7,7 @@ import org.antoniotrentin.epidogsitting.entities.payloads.DogSitterCreatePayload
 import org.antoniotrentin.epidogsitting.exceptions.BadRequestException;
 import org.antoniotrentin.epidogsitting.exceptions.NotFoundException;
 import org.antoniotrentin.epidogsitting.repositories.DogSitterRepository;
+import org.antoniotrentin.epidogsitting.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,10 +21,13 @@ public class DogSitterService {
 	@Autowired
 	DogSitterRepository dogSitterRepo;
 
+	@Autowired
+	UserRepository userRepo;
+
 	// ***** CREATE *****
 	public DogSitter create(DogSitterCreatePayload d) {
 		// se l'email è già presente nel DB lancio una eccezione
-		dogSitterRepo.findByEmail(d.getEmail()).ifPresent(dogsitter -> {
+		userRepo.findByEmail(d.getEmail()).ifPresent(dogsitter -> {
 			throw new BadRequestException("Email " + dogsitter.getEmail() + " già in uso!");
 		});
 
