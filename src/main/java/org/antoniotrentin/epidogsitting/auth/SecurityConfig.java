@@ -33,6 +33,7 @@ public class SecurityConfig {
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/dogs/**").authenticated());
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/dogowners/**").authenticated());
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/dogsitters/**").authenticated());
+		http.authorizeHttpRequests(auth -> auth.requestMatchers("/favorites/**").authenticated());
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/offerings/**").authenticated());
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/reviews/**").authenticated());
 		// http.authorizeHttpRequests(auth -> auth.requestMatchers("/users/**").hasRole(null));
