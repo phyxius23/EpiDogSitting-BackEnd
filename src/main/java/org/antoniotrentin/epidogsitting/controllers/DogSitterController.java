@@ -3,6 +3,7 @@ package org.antoniotrentin.epidogsitting.controllers;
 import java.util.UUID;
 
 import org.antoniotrentin.epidogsitting.entities.DogSitter;
+import org.antoniotrentin.epidogsitting.entities.OfferingType;
 import org.antoniotrentin.epidogsitting.entities.payloads.DogSitterCreatePayload;
 import org.antoniotrentin.epidogsitting.services.DogSitterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +42,9 @@ public class DogSitterController {
 	@GetMapping("")
 	public Page<DogSitter> readDogSitters(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy,
-			@RequestParam(defaultValue = "") String postalCode, @RequestParam(defaultValue = "") String name) {
-		return dogSitterService.readAll(page, size, sortBy, postalCode, name);
+			@RequestParam(defaultValue = "") String postalCode, @RequestParam(defaultValue = "") String name,
+			@RequestParam(defaultValue = "") OfferingType offeringType) {
+		return dogSitterService.readAll(page, size, sortBy, postalCode, name, offeringType);
 	}
 
 	//read by Id

@@ -3,6 +3,7 @@ package org.antoniotrentin.epidogsitting.services;
 import java.util.UUID;
 
 import org.antoniotrentin.epidogsitting.entities.DogSitter;
+import org.antoniotrentin.epidogsitting.entities.OfferingType;
 import org.antoniotrentin.epidogsitting.entities.payloads.DogSitterCreatePayload;
 import org.antoniotrentin.epidogsitting.exceptions.BadRequestException;
 import org.antoniotrentin.epidogsitting.exceptions.NotFoundException;
@@ -37,7 +38,8 @@ public class DogSitterService {
 	}
 
 	//***** READ *****
-	public Page<DogSitter> readAll(int page, int size, String sortBy, String postalCode, String name) {
+	public Page<DogSitter> readAll(int page, int size, String sortBy, String postalCode, String name,
+			OfferingType offeringType) {
 		if (size < 0)
 			size = 0;
 		if (size > 100)
@@ -49,6 +51,8 @@ public class DogSitterService {
 			return dogSitterRepo.findByAddressPostalCode(postalCode, pageable);
 		} else if (!name.equals("")) {
 			return dogSitterRepo.findByNameContaining(name, pageable);
+		} else if (offeringType != null) {
+			return dogSitterRepo.findByOfferingType(offeringType, pageable);
 		} else {
 			return dogSitterRepo.findAll(pageable);
 		}
