@@ -12,4 +12,6 @@ public interface DogOwnerRepository extends JpaRepository<DogOwner, UUID> {
 
 	public Optional<DogOwner> findByEmail(String email);
 
+	//List<DogOwner> findByAddressPostalCode(String postalCode);
+
 }

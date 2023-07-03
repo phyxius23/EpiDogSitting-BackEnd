@@ -2,7 +2,6 @@ package org.antoniotrentin.epidogsitting.controllers;
 
 import java.util.UUID;
 
-import org.antoniotrentin.epidogsitting.entities.Address;
 import org.antoniotrentin.epidogsitting.entities.DogSitter;
 import org.antoniotrentin.epidogsitting.entities.payloads.DogSitterCreatePayload;
 import org.antoniotrentin.epidogsitting.services.DogSitterService;
@@ -42,9 +41,8 @@ public class DogSitterController {
 	@GetMapping("")
 	public Page<DogSitter> readDogSitters(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy,
-			@RequestParam(defaultValue = "", required = false) Address address,
-			@RequestParam(defaultValue = "") String name) {
-		return dogSitterService.readAll(page, size, sortBy, address, name);
+			@RequestParam(defaultValue = "") String postalCode, @RequestParam(defaultValue = "") String name) {
+		return dogSitterService.readAll(page, size, sortBy, postalCode, name);
 	}
 
 	//read by Id
@@ -60,6 +58,12 @@ public class DogSitterController {
 	public String readDogSitterTest() {
 		return "Endpoint di DogSitter funzionante!!!";
 	}
+
+	//	@GetMapping("/{postalCode}")
+	//	public ResponseEntity<List<DogSitter>> getUsersByCap(@PathVariable String postalCode) {
+	//		List<DogSitter> dogSitters = dogSitterService.findByAddressPostalCode(postalCode);
+	//		return ResponseEntity.ok(dogSitters);
+	//	}
 
 	//***** UPDATE *****
 	@PutMapping("/{id}")

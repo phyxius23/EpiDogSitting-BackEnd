@@ -2,7 +2,6 @@ package org.antoniotrentin.epidogsitting.services;
 
 import java.util.UUID;
 
-import org.antoniotrentin.epidogsitting.entities.Address;
 import org.antoniotrentin.epidogsitting.entities.DogSitter;
 import org.antoniotrentin.epidogsitting.entities.payloads.DogSitterCreatePayload;
 import org.antoniotrentin.epidogsitting.exceptions.BadRequestException;
@@ -38,7 +37,7 @@ public class DogSitterService {
 	}
 
 	//***** READ *****
-	public Page<DogSitter> readAll(int page, int size, String sortBy, Address address, String name) {
+	public Page<DogSitter> readAll(int page, int size, String sortBy, String postalCode, String name) {
 		if (size < 0)
 			size = 0;
 		if (size > 100)
@@ -46,8 +45,8 @@ public class DogSitterService {
 
 		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
 
-		if (address != null) {
-			return dogSitterRepo.findByAddressContaining(address, pageable);
+		if (!postalCode.equals("")) {
+			return dogSitterRepo.findByAddressPostalCode(postalCode, pageable);
 		} else if (!name.equals("")) {
 			return dogSitterRepo.findByNameContaining(name, pageable);
 		} else {
@@ -55,6 +54,11 @@ public class DogSitterService {
 		}
 
 	}
+
+	// read by postalCode
+	//	public List<DogSitter> findByAddressPostalCode(String postalCode) {
+	//		return dogSitterRepo.findByAddressPostalCode(postalCode);
+	//	}
 
 	//	public Page<Cliente> find(int page, int size, String sortBy, long fatturato, LocalDate dataInserimento,
 	//			LocalDate dataUltimoContatto, String nomeCliente) {

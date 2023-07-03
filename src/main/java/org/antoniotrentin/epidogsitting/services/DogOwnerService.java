@@ -48,6 +48,11 @@ public class DogOwnerService {
 		return dogOwnerRepo.findAll(pageable);
 	}
 
+	// read by postalCode
+	//public List<DogOwner> findByAddressPostalCode(String postalCode) {
+	//	return dogOwnerRepo.findByAddressPostalCode(postalCode);
+	//}
+
 	// read by Id
 	public DogOwner readById(UUID id) throws NotFoundException {
 		return dogOwnerRepo.findById(id).orElseThrow(() -> new NotFoundException("DogOwner non trovato"));

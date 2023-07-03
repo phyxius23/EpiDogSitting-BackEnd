@@ -3,7 +3,6 @@ package org.antoniotrentin.epidogsitting.repositories;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.antoniotrentin.epidogsitting.entities.Address;
 import org.antoniotrentin.epidogsitting.entities.DogSitter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +18,11 @@ public interface DogSitterRepository extends JpaRepository<DogSitter, UUID> {
 
 	Page<DogSitter> findByNameContaining(String name, Pageable pageable);
 
-	Page<DogSitter> findByAddressContaining(Address address, Pageable pageable);
+	//Page<DogSitter> findByAddressContaining(@Nullable Address address, Pageable pageable);
+
+	//List<DogSitter> findByAddressPostalCode(String postalCode);
+
+	Page<DogSitter> findByAddressPostalCode(String postalCode, Pageable pageable);
 
 	//	@Query("SELECT ds FROM dogsitters ds JOIN FETCH t1.tabella2List t2 WHERE t1.id = :id")
 	//  DogSitter findTabella1AndTabella2ById(@Param("id") Long id);
