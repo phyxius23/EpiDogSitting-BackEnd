@@ -2,6 +2,7 @@ package org.antoniotrentin.epidogsitting.controllers;
 
 import java.util.UUID;
 
+import org.antoniotrentin.epidogsitting.entities.Address;
 import org.antoniotrentin.epidogsitting.entities.DogSitter;
 import org.antoniotrentin.epidogsitting.entities.payloads.DogSitterCreatePayload;
 import org.antoniotrentin.epidogsitting.services.DogSitterService;
@@ -40,8 +41,10 @@ public class DogSitterController {
 	//***** READ *****
 	@GetMapping("")
 	public Page<DogSitter> readDogSitters(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
-		return dogSitterService.readAll(page, size, sortBy);
+			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy,
+			@RequestParam(defaultValue = "", required = false) Address address,
+			@RequestParam(defaultValue = "") String name) {
+		return dogSitterService.readAll(page, size, sortBy, address, name);
 	}
 
 	//read by Id

@@ -22,17 +22,14 @@ import lombok.Setter;
 public class DogSitter extends User {
 
 	@OneToMany(mappedBy = "dogSitter", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-	//(mappedBy = "dogSitter")
 	@JsonManagedReference
 	private List<Offering> offerings = new ArrayList<>();
 
 	@OneToMany(mappedBy = "dogSitter", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-	//(mappedBy = "dogSitter")
 	@JsonManagedReference
 	private List<Review> reviews = new ArrayList<>();
 
 	@OneToMany(mappedBy = "dogSitter", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-	//(mappedBy = "dogSitter")
 	@JsonManagedReference
 	private List<Booking> bookings = new ArrayList<>();
 

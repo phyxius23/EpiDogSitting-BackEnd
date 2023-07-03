@@ -2,6 +2,7 @@ package org.antoniotrentin.epidogsitting.services;
 
 import java.util.UUID;
 
+import org.antoniotrentin.epidogsitting.entities.Address;
 import org.antoniotrentin.epidogsitting.entities.DogSitter;
 import org.antoniotrentin.epidogsitting.entities.payloads.DogSitterCreatePayload;
 import org.antoniotrentin.epidogsitting.exceptions.BadRequestException;
@@ -37,7 +38,7 @@ public class DogSitterService {
 	}
 
 	//***** READ *****
-	public Page<DogSitter> readAll(int page, int size, String sortBy) {
+	public Page<DogSitter> readAll(int page, int size, String sortBy, Address address, String name) {
 		if (size < 0)
 			size = 0;
 		if (size > 100)
@@ -45,8 +46,31 @@ public class DogSitterService {
 
 		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
 
-		return dogSitterRepo.findAll(pageable);
+		if (address != null) {
+			return dogSitterRepo.findByAddressContaining(address, pageable);
+		} else if (!name.equals("")) {
+			return dogSitterRepo.findByNameContaining(name, pageable);
+		} else {
+			return dogSitterRepo.findAll(pageable);
+		}
+
 	}
+
+	//	public Page<Cliente> find(int page, int size, String sortBy, long fatturato, LocalDate dataInserimento,
+	//			LocalDate dataUltimoContatto, String nomeCliente) {
+	//
+	//		if (fatturato > 0) {
+	//			return clientiRepo.findByFatturatoAnnuale(fatturato, pageable);
+	//		} else if (dataInserimento != null) {
+	//			return clientiRepo.findByDataInserimento(dataInserimento, pageable);
+	//		} else if (dataUltimoContatto != null) {
+	//			return clientiRepo.findByDataUltimoContatto(dataUltimoContatto, pageable);
+	//		} else if (!nomeCliente.equals("")) {
+	//			return clientiRepo.findByRagioneSocialeContaining(nomeCliente, pageable);
+	//		} else {
+	//			return clientiRepo.findAll(pageable);
+	//		}
+	//	}
 
 	// read by Id
 	public DogSitter readById(UUID id) throws NotFoundException {
