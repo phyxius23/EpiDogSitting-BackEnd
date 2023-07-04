@@ -3,6 +3,10 @@ package org.antoniotrentin.epidogsitting;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +16,7 @@ import org.antoniotrentin.epidogsitting.entities.payloads.DogSitterCreatePayload
 import org.antoniotrentin.epidogsitting.repositories.DogSitterRepository;
 import org.antoniotrentin.epidogsitting.repositories.UserRepository;
 import org.antoniotrentin.epidogsitting.services.DogSitterService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -24,6 +29,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
@@ -82,17 +88,18 @@ class EpidogsittingApplicationTests {
 	}
 
 	// Manca l'autorizzazione nell'header per poter eseguire il test correttamente
-	//@Test
-	//	public void testGetDogSitters() throws Exception {
-	//		String servicePath = "/dogsitters";
-	//		int page = 0;
-	//		int size = 10;
-	//		String sortBy = "id";
-	//		mockMvc
-	//				.perform(get(serviceUrl + servicePath).param("page", String.valueOf(page)).param("size", String.valueOf(size))
-	//						.param("sortBy", sortBy))
-	//				.andDo(print()).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
-	//	}
+	@Disabled
+	@Test
+	public void testGetDogSitters() throws Exception {
+		String servicePath = "/dogsitters";
+		int page = 0;
+		int size = 10;
+		String sortBy = "id";
+		mockMvc
+				.perform(get(serviceUrl + servicePath).param("page", String.valueOf(page)).param("size", String.valueOf(size))
+						.param("sortBy", sortBy))
+				.andDo(print()).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
+	}
 
 	@Test
 	void contextLoads() {

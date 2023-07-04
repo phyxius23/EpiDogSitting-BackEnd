@@ -32,9 +32,4 @@ public interface DogSitterRepository extends JpaRepository<DogSitter, UUID> {
 	@Query("SELECT d FROM DogSitter d JOIN d.offerings o WHERE o.type = :offeringType")
 	Page<DogSitter> findByOfferingType(@Param("offeringType") OfferingType offeringType, Pageable pageable);
 
-	//	@Query("SELECT ds FROM dogsitters ds JOIN FETCH t1.tabella2List t2 WHERE t1.id = :id")
-	//  DogSitter findTabella1AndTabella2ById(@Param("id") Long id);
-	//	@Query("SELECT ds FROM DogSitter ds WHERE c.address = :provincia")
-	//	List<DogSitter> findByPostalCode(@Param("provincia") String provincia);
-
 }

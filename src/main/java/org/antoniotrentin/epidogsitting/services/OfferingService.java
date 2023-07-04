@@ -26,10 +26,15 @@ public class OfferingService {
 
 	//***** CREATE *****
 	public Offering create(OfferingCreatePayload o) {
-
 		DogSitter dogSitterFound = dogSitterService.readById(o.getDogSitter());
 
-		Offering newOffering = new Offering(OfferingType.valueOf(o.getType()), o.getPrice(), dogSitterFound);
+		Offering newOffering = null;
+
+		if (offeringRepo.findByDogSitterIdAndType(o.getDogSitter(), OfferingType.valueOf(o.getType())).isEmpty()) {
+			newOffering = new Offering(OfferingType.valueOf(o.getType()), o.getPrice(), dogSitterFound);
+		} else {
+			throw new NotFoundException("Servizio " + o.getType() + " già presente nel DB per il dogsitter specificato.");
+		}
 
 		return offeringRepo.save(newOffering);
 	}
@@ -53,12 +58,18 @@ public class OfferingService {
 
 	//***** UPDATE *****
 	public Offering updateById(UUID id, OfferingCreatePayload o) throws NotFoundException {
+		//DogSitter dogSitterFound = dogSitterService.readById(o.getDogSitter());
+
 		Offering offeringFound = this.readById(id);
 
-		offeringFound.setId(id);
-		offeringFound.setType(OfferingType.valueOf(o.getType()));
-		offeringFound.setPrice(o.getPrice());
-		offeringFound.setDogSitter(dogSitterService.readById(o.getDogSitter()));
+		if (offeringFound.getType() == OfferingType.valueOf(o.getType())) {
+			offeringFound.setId(id);
+			offeringFound.setType(OfferingType.valueOf(o.getType()));
+			offeringFound.setPrice(o.getPrice());
+			offeringFound.setDogSitter(dogSitterService.readById(o.getDogSitter()));
+		} else {
+			throw new NotFoundException("Il tipo di servizio non può essere modificato.");
+		}
 
 		return offeringRepo.save(offeringFound);
 	}
