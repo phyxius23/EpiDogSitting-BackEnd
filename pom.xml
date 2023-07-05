@@ -85,6 +85,13 @@
 			<artifactId>stripe-java</artifactId>
 			<version>22.24.0</version>
 		</dependency>
+		
+		<!-- SWAGGER -->
+		<dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.1.0</version>
+        </dependency>
 
 	</dependencies>
 

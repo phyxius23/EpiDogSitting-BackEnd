@@ -29,6 +29,8 @@ public class SecurityConfig {
 		http.csrf(c -> c.disable()); //=> http.csrf(AbstractHttpConfigurer::disable);
 
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll());
+		http.authorizeHttpRequests(auth -> auth.requestMatchers("/swagger-ui/**").permitAll());
+		http.authorizeHttpRequests(auth -> auth.requestMatchers("/api-docs/**").permitAll());
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/addresses/**").authenticated());
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/bookings/**").authenticated());
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/dogs/**").authenticated());
@@ -37,6 +39,7 @@ public class SecurityConfig {
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/favorites/**").authenticated());
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/offerings/**").authenticated());
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/reviews/**").authenticated());
+
 		//http.authorizeHttpRequests(auth -> auth.requestMatchers("/users/**").hasRole(null));
 
 		/**
