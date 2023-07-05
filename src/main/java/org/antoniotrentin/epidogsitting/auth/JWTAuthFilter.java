@@ -50,26 +50,25 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 		}
 	}
 
-	@Override
-	protected boolean shouldNotFilter(HttpServletRequest request) {
-		return new AntPathMatcher().match("/auth/**", request.getServletPath())
-				|| new AntPathMatcher().match("/swagger-ui/**", request.getServletPath())
-				|| new AntPathMatcher().match("/api-docs/**", request.getServletPath());
-	}
-	//  da configurare
 	//	@Override
 	//	protected boolean shouldNotFilter(HttpServletRequest request) {
-	//		String[] patterns = { "/auth/**", "/swagger-ui/**", "/api-docs/**" };
-	//		AntPathMatcher matcher = new AntPathMatcher();
-	//		boolean match = false;
-	//		for (String pattern : patterns) {
-	//			if (matcher.match(pattern, request.getServletPath())) {
-	//				match = true;
-	//				break;
-	//			}
-	//		}
-	//
-	//		return match;
+	//		return new AntPathMatcher().match("/auth/**", request.getServletPath())
+	//				|| new AntPathMatcher().match("/swagger-ui/**", request.getServletPath())
+	//				|| new AntPathMatcher().match("/api-docs/**", request.getServletPath());
 	//	}
+	@Override
+	protected boolean shouldNotFilter(HttpServletRequest request) {
+		String[] patterns = { "/auth/**", "/swagger-ui/**", "/api-docs/**" };
+		AntPathMatcher matcher = new AntPathMatcher();
+		boolean match = false;
+		for (String pattern : patterns) {
+			if (matcher.match(pattern, request.getServletPath())) {
+				match = true;
+				break;
+			}
+		}
+
+		return match;
+	}
 
 }
