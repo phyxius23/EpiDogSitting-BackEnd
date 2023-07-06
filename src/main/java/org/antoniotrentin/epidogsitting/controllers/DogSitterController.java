@@ -4,13 +4,18 @@ import java.util.UUID;
 
 import org.antoniotrentin.epidogsitting.entities.DogSitter;
 import org.antoniotrentin.epidogsitting.entities.OfferingType;
+import org.antoniotrentin.epidogsitting.entities.User;
 import org.antoniotrentin.epidogsitting.entities.payloads.DogSitterCreatePayload;
 import org.antoniotrentin.epidogsitting.services.DogSitterService;
+import org.antoniotrentin.epidogsitting.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +35,9 @@ public class DogSitterController {
 
 	@Autowired
 	DogSitterService dogSitterService;
+
+	@Autowired
+	UserService userService;
 
 	//***** CREATE *****
 	@PostMapping("")
@@ -52,6 +60,20 @@ public class DogSitterController {
 	@PostAuthorize("hasAuthority('DOGSITTER')")
 	public DogSitter readDogSitter(@PathVariable UUID id) throws Exception {
 		return dogSitterService.readById(id);
+	}
+
+	@GetMapping("/profile/me")
+	public ResponseEntity<User> getProfiloUtente() {
+
+		// Recupera l'utente corrente dal sistema di autenticazione
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String email = authentication.getName();
+
+		// Recupera i dettagli dell'utente dal database o da un altro servizio
+		User user = userService.findByEmail(email);
+
+		// Restituisci i dettagli dell'utente come risposta
+		return ResponseEntity.ok(user);
 	}
 
 	//read TEST
