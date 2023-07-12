@@ -24,8 +24,8 @@ public class DogService {
 	DogOwnerService dogOwnerService;
 
 	//***** CREATE *****
-	public Dog create(DogCreatePayload d) {
-		DogOwner dogOwnerFound = dogOwnerService.readById(d.getDogOwner());
+	public Dog create(UUID userId, DogCreatePayload d) {
+		DogOwner dogOwnerFound = dogOwnerService.readById(userId);
 
 		Dog newDog = new Dog(d.getName(), d.getAge(), d.getBreed(), d.getWeight(), d.getDescription(), dogOwnerFound);
 
@@ -50,16 +50,16 @@ public class DogService {
 	}
 
 	//***** UPDATE *****
-	public Dog updateById(UUID id, DogCreatePayload d) throws NotFoundException {
-		Dog dogFound = this.readById(id);
+	public Dog updateById(UUID userId, UUID dogId, DogCreatePayload d) throws NotFoundException {
+		Dog dogFound = this.readById(dogId);
 
-		dogFound.setId(id);
+		dogFound.setId(dogId);
 		dogFound.setName(d.getName());
 		dogFound.setAge(d.getAge());
 		dogFound.setBreed(d.getBreed());
 		dogFound.setWeight(d.getWeight());
 		dogFound.setDescription(d.getDescription());
-		dogFound.setDogOwner(dogOwnerService.readById(d.getDogOwner()));
+		dogFound.setDogOwner(dogOwnerService.readById(userId));
 
 		return dogRepo.save(dogFound);
 	}

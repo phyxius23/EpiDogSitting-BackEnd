@@ -24,22 +24,22 @@ public class AddressService {
 	UserService userService;
 
 	//***** CREATE *****
-	public Address create(AddressCreatePayload a) {
-		User userFound = userService.findById(a.getUser());
-
-		Address newAddress = new Address(a.getStreet(), a.getCity(), a.getProvince(), a.getPostalCode(), userFound);
-
-		return addressRepo.save(newAddress);
-	}
-
-	//	//***** CREATE *****
-	//	public Address create(UUID id, AddressCreatePayload a) {
-	//		User userFound = userService.findById(id);
+	//	public Address create(AddressCreatePayload a) {
+	//		User userFound = userService.findById(a.getUser());
 	//
 	//		Address newAddress = new Address(a.getStreet(), a.getCity(), a.getProvince(), a.getPostalCode(), userFound);
 	//
 	//		return addressRepo.save(newAddress);
 	//	}
+
+	//	//***** CREATE *****
+	public Address create(UUID userId, AddressCreatePayload a) {
+		User userFound = userService.findById(userId);
+
+		Address newAddress = new Address(a.getStreet(), a.getCity(), a.getProvince(), a.getPostalCode(), userFound);
+
+		return addressRepo.save(newAddress);
+	}
 
 	//***** READ *****
 	public Page<Address> readAll(int page, int size, String sortBy) {
@@ -58,16 +58,30 @@ public class AddressService {
 		return addressRepo.findById(id).orElseThrow(() -> new NotFoundException("Indirizzo non trovato"));
 	}
 
-	//***** UPDATE *****
-	public Address updateById(UUID id, AddressCreatePayload a) throws NotFoundException {
-		Address addressFound = this.readById(id);
+	//	//***** UPDATE *****
+	//	public Address updateById(UUID id, AddressCreatePayload a) throws NotFoundException {
+	//		Address addressFound = this.readById(id);
+	//
+	//		addressFound.setId(id);
+	//		addressFound.setStreet(a.getStreet());
+	//		addressFound.setCity(a.getCity());
+	//		addressFound.setProvince(a.getProvince());
+	//		addressFound.setPostalCode(a.getPostalCode());
+	//		addressFound.setUser(userService.findById(a.getUser()));
+	//
+	//		return addressRepo.save(addressFound);
+	//	}
 
-		addressFound.setId(id);
+	//***** UPDATE *****
+	public Address updateById(UUID userId, UUID addressId, AddressCreatePayload a) throws NotFoundException {
+		Address addressFound = this.readById(addressId);
+
+		addressFound.setId(addressId);
 		addressFound.setStreet(a.getStreet());
 		addressFound.setCity(a.getCity());
 		addressFound.setProvince(a.getProvince());
 		addressFound.setPostalCode(a.getPostalCode());
-		addressFound.setUser(userService.findById(a.getUser()));
+		addressFound.setUser(userService.findById(userId));
 
 		return addressRepo.save(addressFound);
 	}
