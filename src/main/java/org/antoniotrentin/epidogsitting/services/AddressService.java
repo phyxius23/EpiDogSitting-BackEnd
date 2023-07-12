@@ -32,6 +32,15 @@ public class AddressService {
 		return addressRepo.save(newAddress);
 	}
 
+	//	//***** CREATE *****
+	//	public Address create(UUID id, AddressCreatePayload a) {
+	//		User userFound = userService.findById(id);
+	//
+	//		Address newAddress = new Address(a.getStreet(), a.getCity(), a.getProvince(), a.getPostalCode(), userFound);
+	//
+	//		return addressRepo.save(newAddress);
+	//	}
+
 	//***** READ *****
 	public Page<Address> readAll(int page, int size, String sortBy) {
 		if (size < 0)

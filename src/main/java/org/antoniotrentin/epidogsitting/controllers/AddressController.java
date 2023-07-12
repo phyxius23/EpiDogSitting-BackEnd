@@ -30,12 +30,19 @@ public class AddressController {
 	@Autowired
 	AddressService addressService;
 
-	//***** CREATE *****
+	//***** CREATE ***** FUNZIONANTE A METÀ
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Address createAddress(@RequestBody @Validated AddressCreatePayload body) {
 		return addressService.create(body);
 	}
+
+	//	//***** CREATE *****
+	//	@PostMapping("/{id}")
+	//	@ResponseStatus(HttpStatus.CREATED)
+	//	public Address createAddress(@PathVariable UUID id, @RequestBody @Validated AddressCreatePayload body) {
+	//		return addressService.create(id, body);
+	//	}
 
 	//***** READ *****
 	@GetMapping("")
