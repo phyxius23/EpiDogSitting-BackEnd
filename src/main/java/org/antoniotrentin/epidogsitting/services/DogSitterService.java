@@ -47,16 +47,94 @@ public class DogSitterService {
 
 		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
 
-		if (!postalCode.equals("")) {
+		//funzionante un filtro alla volta
+		//if (!postalCode.equals("")) {
+		//	return dogSitterRepo.findByAddressPostalCode(postalCode, pageable);
+		//} else if (!name.equals("")) {
+		//	return dogSitterRepo.findByNameContaining(name, pageable);
+		//} else if (offeringType != null) {
+		//	return dogSitterRepo.findByOfferingType(offeringType, pageable);
+		//} else {
+		//	return dogSitterRepo.findAll(pageable);
+		//}
+		//			traccia che mi permetterà di recuperare i dati 
+		//		if (!postalCode.equals("")) {
+		//			if (!name.equals("")) {
+		//				if (offeringType != null) {
+		//					return dogSitterRepo.findByByAddressPostalCodeByOfferingType(postalCode, offeringType, pageable);
+		//				} else {
+		//					return dogSitterRepo.findByByAddressPostalCodeByName(postalCode, name, pageable);
+		//				}
+		//			}
+		//		}
+
+		// ******* CODICE DEFINITIVO *******
+		if (!postalCode.equals("") && name.equals("") && offeringType == null) {
 			return dogSitterRepo.findByAddressPostalCode(postalCode, pageable);
-		} else if (!name.equals("")) {
+		}
+
+		if (!postalCode.equals("") && !name.equals("") && offeringType == null) {
+			return dogSitterRepo.findByByAddressPostalCodeByName(postalCode, name, pageable);
+		}
+
+		if (!postalCode.equals("") && name.equals("") && offeringType != null) {
+			return dogSitterRepo.findByByAddressPostalCodeByOfferingType(postalCode, offeringType, pageable);
+		}
+
+		if (postalCode.equals("") && !name.equals("") && offeringType == null) {
 			return dogSitterRepo.findByNameContaining(name, pageable);
-		} else if (offeringType != null) {
+		}
+
+		if (postalCode.equals("") && name.equals("") && offeringType != null) {
 			return dogSitterRepo.findByOfferingType(offeringType, pageable);
-		} else {
+		}
+
+		if (postalCode.equals("") && name.equals("") && offeringType == null) {
 			return dogSitterRepo.findAll(pageable);
 		}
 
+		// ***** FINE CODICE DEFINITIVO *****
+
+		//		test
+		//		if (!postalCode.equals("")) {
+		//			return dogSitterRepo.findByAddressPostalCode(postalCode, pageable);
+		//		} else if (!name.equals("")) {
+		//			return dogSitterRepo.findByNameContaining(name, pageable);
+		//		} else if (offeringType != null) {
+		//			return dogSitterRepo.findByOfferingType(offeringType, pageable);
+		//		} else {
+		//			return dogSitterRepo.findAll(pageable);
+		//		}
+
+		//Page<DogSitter> pageableFilter = null;
+		//		Page<Book> books = bookRepository.findAllByNameContains(name, pageable);
+		//		return PaginatedBookResponse.builder().numberOfItems(books.getTotalElements()).numberOfPages(books.getTotalPages())
+		//				.bookList(books.getContent()).build();
+		//		Page<DogSitter> dogsittersPageable = dogSitterRepo.findAll(pageable);
+		//		dogsittersPageable.filter(null)
+
+		//		System.out.println(dogsittersPageable.getTotalElements());
+
+		//		if (!postalCode.equals("")) {
+		//			pageableFilter = dogSitterRepo.findByAddressPostalCode(postalCode, pageable);
+		//			System.out.println(pageableFilter.getTotalElements());
+		//		}
+		//
+		//		if (!name.equals("")) {
+		//			pageableFilter = dogSitterRepo.findByNameContaining(name, (Pageable) pageableFilter);
+		//			System.out.println(pageableFilter.getTotalElements());
+		//		}
+		//		if (offeringType != null) {
+		//			pageableFilter = dogSitterRepo.findByOfferingType(offeringType, (Pageable) pageableFilter);
+		//			System.out.println(pageableFilter.getTotalElements());
+		//		}
+		//		if (pageableFilter == null) {
+		//			return dogSitterRepo.findAll(pageable);
+		//pageableFilter = dogSitterRepo.findAll(pageable);
+		//	}
+
+		//		return dogsittersPageable;
+		return dogSitterRepo.findAll(pageable);
 	}
 
 	// read by postalCode
