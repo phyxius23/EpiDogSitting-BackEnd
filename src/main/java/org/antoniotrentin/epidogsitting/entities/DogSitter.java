@@ -21,6 +21,12 @@ import lombok.Setter;
 @Table(name = "dogsitters")
 public class DogSitter extends User {
 
+	//	private String description;
+
+	//	@OneToMany(mappedBy = "dogSitter", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	//	@JsonManagedReference
+	//	private List<Image> images = new ArrayList<>();
+
 	@OneToMany(mappedBy = "dogSitter", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@JsonManagedReference
 	private List<Offering> offerings = new ArrayList<>();

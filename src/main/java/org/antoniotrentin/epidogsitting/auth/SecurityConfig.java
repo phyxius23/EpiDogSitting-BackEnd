@@ -41,6 +41,7 @@ public class SecurityConfig {
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/offerings/**").authenticated());
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/reviews/**").authenticated());
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/api/**").authenticated());
+		http.authorizeHttpRequests(auth -> auth.requestMatchers("/image/**").authenticated());
 
 		//http.authorizeHttpRequests(auth -> auth.requestMatchers("/users/**").hasRole(null));
 

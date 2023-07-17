@@ -44,6 +44,9 @@ public abstract class User implements UserDetails {
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private Address address;
 
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private Image image;
+
 	public User(String name, String surname, String email, String password) {
 		this.name = name;
 		this.surname = surname;

@@ -1,11 +1,10 @@
 package org.antoniotrentin.epidogsitting.services;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.antoniotrentin.epidogsitting.entities.DogOwner;
-import org.antoniotrentin.epidogsitting.entities.DogSitter;
 import org.antoniotrentin.epidogsitting.entities.Favorite;
-import org.antoniotrentin.epidogsitting.entities.payloads.FavoritePayload;
 import org.antoniotrentin.epidogsitting.exceptions.NotFoundException;
 import org.antoniotrentin.epidogsitting.repositories.FavoriteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +27,12 @@ public class FavoriteService {
 	DogSitterService dogSitterService;
 
 	//***** CREATE *****
-	public Favorite create(FavoritePayload f) {
+	public Favorite create(UUID dogOwnerId, String dogSitterId) {
 
-		DogSitter dogSitterFound = dogSitterService.readById(f.getDogSitter());
-		DogOwner dogOwnerFound = dogOwnerService.readById(f.getDogOwner());
+		DogOwner dogOwnerFound = dogOwnerService.readById(dogOwnerId);
+		//		DogSitter dogSitterFound = dogSitterService.readById(dogSitterId);
 
-		Favorite newFavorite = new Favorite(dogSitterFound, dogOwnerFound);
+		Favorite newFavorite = new Favorite(dogSitterId, dogOwnerFound);
 
 		return favoriteRepo.save(newFavorite);
 	}
@@ -48,6 +47,13 @@ public class FavoriteService {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
 
 		return favoriteRepo.findAll(pageable);
+	}
+
+	// read by dogownerId
+	public List<Favorite> readByDogOwner(UUID dogOwnerId) {
+
+		//		UUID dogOwnerUUID = UUID.fromString(dogOwnerId);
+		return favoriteRepo.findByDogOwnerId(dogOwnerId);
 	}
 
 	// read by Id

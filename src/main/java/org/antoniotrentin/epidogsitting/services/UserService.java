@@ -33,7 +33,7 @@ public class UserService {
 	//	}
 
 	public User findById(UUID id) throws NotFoundException {
-		return userRepo.findById(id).orElseThrow(() -> new NotFoundException("Utente con Id:" + id + "non trovato!!"));
+		return userRepo.findById(id).orElseThrow(() -> new NotFoundException("Utente con Id:" + id + " non trovato!!"));
 	}
 	//
 	//	public User findByEmail(String email) throws NotFoundException {
@@ -47,7 +47,7 @@ public class UserService {
 	//	}
 
 	public User findByEmail(String email) throws NotFoundException {
-		return userRepo.findByEmail(email).orElseThrow(() -> new NotFoundException("Utente:" + email + "non trovato!!"));
+		return userRepo.findByEmail(email).orElseThrow(() -> new NotFoundException("Utente:" + email + " non trovato!!"));
 	}
 
 	//	public User findByIdAndUpdate(UUID id, User u) throws NotFoundException {

@@ -4,10 +4,12 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,6 +37,9 @@ public class Dog {
 	@ManyToOne
 	@JsonBackReference
 	private DogOwner dogOwner;
+
+	@OneToOne(mappedBy = "dog", cascade = CascadeType.ALL)
+	private Image image;
 
 	// costruttore
 	public Dog(String name, int age, String breed, int weight, String description, DogOwner dogOwner) {

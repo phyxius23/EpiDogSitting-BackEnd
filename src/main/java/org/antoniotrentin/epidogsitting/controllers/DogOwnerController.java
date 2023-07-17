@@ -1,18 +1,28 @@
 package org.antoniotrentin.epidogsitting.controllers;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
+
+import javax.imageio.ImageIO;
 
 import org.antoniotrentin.epidogsitting.entities.Address;
 import org.antoniotrentin.epidogsitting.entities.Dog;
 import org.antoniotrentin.epidogsitting.entities.DogOwner;
+import org.antoniotrentin.epidogsitting.entities.Image;
 import org.antoniotrentin.epidogsitting.entities.User;
 import org.antoniotrentin.epidogsitting.entities.payloads.AddressCreatePayload;
 import org.antoniotrentin.epidogsitting.entities.payloads.DogCreatePayload;
 import org.antoniotrentin.epidogsitting.entities.payloads.DogOwnerCreatePayload;
+import org.antoniotrentin.epidogsitting.entities.payloads.Message;
 import org.antoniotrentin.epidogsitting.exceptions.NotFoundException;
+import org.antoniotrentin.epidogsitting.repositories.ImageRepository;
 import org.antoniotrentin.epidogsitting.services.AddressService;
+import org.antoniotrentin.epidogsitting.services.CloudinaryService;
 import org.antoniotrentin.epidogsitting.services.DogOwnerService;
 import org.antoniotrentin.epidogsitting.services.DogService;
+import org.antoniotrentin.epidogsitting.services.ImageService;
 import org.antoniotrentin.epidogsitting.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,6 +42,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/dogowner")
@@ -49,6 +60,15 @@ public class DogOwnerController {
 
 	@Autowired
 	DogService dogService;
+
+	@Autowired
+	CloudinaryService cloudinaryService;
+
+	@Autowired
+	ImageService imageService;
+
+	@Autowired
+	ImageRepository imageRepository;
 
 	/**
 	 * *** CREATE, READ, UPDATE, DELETE ***
@@ -142,6 +162,33 @@ public class DogOwnerController {
 	public Dog updateDog(@PathVariable UUID userId, @PathVariable UUID dogId,
 			@RequestBody @Validated DogCreatePayload body) throws Exception {
 		return dogService.updateById(userId, dogId, body);
+	}
+
+	/**
+	 * *** CREATE, READ, UPDATE, DELETE ***
+	 * *** ********* IMAGE **********
+	 */
+
+	//***** CREATE *****
+	@PostMapping("/{userId}/image/upload")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<?> uploadImage(@PathVariable UUID userId,
+			@RequestParam("multipartFile") MultipartFile multipartFile) throws IOException {
+		BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
+
+		if (bi == null) {
+			return new ResponseEntity(new Message("Immagine non valida"), HttpStatus.BAD_REQUEST);
+		}
+		Map result = cloudinaryService.upload(multipartFile);
+
+		User userFound = userService.findById(userId);
+
+		Image image = new Image((String) result.get("original_filename"), (String) result.get("url"),
+				(String) result.get("public_id"), userFound);
+		Image ImageSaved = imageService.save(image);
+		System.out.println(image);
+
+		return new ResponseEntity(ImageSaved, HttpStatus.OK);
 	}
 
 }

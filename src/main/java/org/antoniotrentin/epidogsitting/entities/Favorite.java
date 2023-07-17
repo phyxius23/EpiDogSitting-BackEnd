@@ -24,15 +24,17 @@ public class Favorite {
 	@GeneratedValue
 	private UUID id;
 
-	@ManyToOne
-	@JsonBackReference
-	private DogSitter dogSitter;
+	//	@ManyToOne
+	//	@JsonBackReference
+	//	private DogSitter dogSitter;
+
+	private String dogSitter;
 
 	@ManyToOne
 	@JsonBackReference
 	private DogOwner dogOwner;
 
-	public Favorite(DogSitter dogSitter, DogOwner dogOwner) {
+	public Favorite(String dogSitter, DogOwner dogOwner) {
 		this.dogSitter = dogSitter;
 		this.dogOwner = dogOwner;
 	}
