@@ -7,6 +7,7 @@ import org.antoniotrentin.epidogsitting.entities.payloads.DogOwnerCreatePayload;
 import org.antoniotrentin.epidogsitting.exceptions.BadRequestException;
 import org.antoniotrentin.epidogsitting.exceptions.NotFoundException;
 import org.antoniotrentin.epidogsitting.repositories.DogOwnerRepository;
+import org.antoniotrentin.epidogsitting.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,15 +21,17 @@ public class DogOwnerService {
 	@Autowired
 	DogOwnerRepository dogOwnerRepo;
 
+	@Autowired
+	UserRepository userRepo;
+
 	// ***** CREATE *****
-	public DogOwner create(DogOwnerCreatePayload dop) {
+	public DogOwner create(DogOwnerCreatePayload d) {
 		// se l'email è già presente nel DB lancio una eccezione
-		dogOwnerRepo.findByEmail(dop.getEmail()).ifPresent(dogowner -> {
+		userRepo.findByEmail(d.getEmail()).ifPresent(dogowner -> {
 			throw new BadRequestException("Email " + dogowner.getEmail() + " già in uso!");
 		});
 
-		DogOwner newDogOwner = new DogOwner(dop.getName(), dop.getSurname(), dop.getEmail(), dop.getPassword(),
-				dop.getAddress());
+		DogOwner newDogOwner = new DogOwner(d.getName(), d.getSurname(), d.getEmail(), d.getPassword());
 
 		return dogOwnerRepo.save(newDogOwner);
 	}
@@ -45,6 +48,11 @@ public class DogOwnerService {
 		return dogOwnerRepo.findAll(pageable);
 	}
 
+	// read by postalCode
+	//public List<DogOwner> findByAddressPostalCode(String postalCode) {
+	//	return dogOwnerRepo.findByAddressPostalCode(postalCode);
+	//}
+
 	// read by Id
 	public DogOwner readById(UUID id) throws NotFoundException {
 		return dogOwnerRepo.findById(id).orElseThrow(() -> new NotFoundException("DogOwner non trovato"));
@@ -56,20 +64,20 @@ public class DogOwnerService {
 	}
 
 	//***** UPDATE *****
-	public DogOwner update(UUID id, DogOwnerCreatePayload ds) throws NotFoundException {
+	public DogOwner updateById(UUID id, DogOwnerCreatePayload d) throws NotFoundException {
 		DogOwner dogOwnerFound = this.readById(id);
 
 		dogOwnerFound.setId(id);
-		dogOwnerFound.setName(ds.getName());
-		dogOwnerFound.setSurname(ds.getSurname());
-		dogOwnerFound.setEmail(ds.getEmail());
-		dogOwnerFound.setPassword(ds.getPassword());
+		dogOwnerFound.setName(d.getName());
+		dogOwnerFound.setSurname(d.getSurname());
+		dogOwnerFound.setEmail(d.getEmail());
+		dogOwnerFound.setPassword(d.getPassword());
 
 		return dogOwnerRepo.save(dogOwnerFound);
 	}
 
 	//***** DELETE *****
-	public void delete(UUID id) throws NotFoundException {
+	public void deleteById(UUID id) throws NotFoundException {
 		DogOwner dogOwnerFound = this.readById(id);
 
 		dogOwnerRepo.delete(dogOwnerFound);

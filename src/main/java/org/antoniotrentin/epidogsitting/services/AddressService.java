@@ -3,6 +3,7 @@ package org.antoniotrentin.epidogsitting.services;
 import java.util.UUID;
 
 import org.antoniotrentin.epidogsitting.entities.Address;
+import org.antoniotrentin.epidogsitting.entities.User;
 import org.antoniotrentin.epidogsitting.entities.payloads.AddressCreatePayload;
 import org.antoniotrentin.epidogsitting.exceptions.NotFoundException;
 import org.antoniotrentin.epidogsitting.repositories.AddressRepository;
@@ -19,14 +20,23 @@ public class AddressService {
 	@Autowired
 	AddressRepository addressRepo;
 
-	//***** CREATE *****
-	public Address create(AddressCreatePayload dsp) {
-		//		// se l'email è già presente nel DB lancio una eccezione
-		//		dogSitterRepo.findByEmail(dsp.getEmail()).ifPresent(dogsitter -> {
-		//			throw new BadRequestException("Email " + dogsitter.getEmail() + " già in uso!");
-		//		});
+	@Autowired
+	UserService userService;
 
-		Address newAddress = new Address();
+	//***** CREATE *****
+	//	public Address create(AddressCreatePayload a) {
+	//		User userFound = userService.findById(a.getUser());
+	//
+	//		Address newAddress = new Address(a.getStreet(), a.getCity(), a.getProvince(), a.getPostalCode(), userFound);
+	//
+	//		return addressRepo.save(newAddress);
+	//	}
+
+	//	//***** CREATE *****
+	public Address create(UUID userId, AddressCreatePayload a) {
+		User userFound = userService.findById(userId);
+
+		Address newAddress = new Address(a.getStreet(), a.getCity(), a.getProvince(), a.getPostalCode(), userFound);
 
 		return addressRepo.save(newAddress);
 	}
@@ -45,25 +55,39 @@ public class AddressService {
 
 	// read by Id
 	public Address readById(UUID id) throws NotFoundException {
-		return addressRepo.findById(id).orElseThrow(() -> new NotFoundException("DogSitter non trovato"));
+		return addressRepo.findById(id).orElseThrow(() -> new NotFoundException("Indirizzo non trovato"));
 	}
 
-	//	// read by email
-	//	public Address readByEmail(String email) throws NotFoundException {
-	//		return addressRepo.findByEmail(email).orElseThrow(() -> new NotFoundException("Email non trovata"));
+	//	//***** UPDATE *****
+	//	public Address updateById(UUID id, AddressCreatePayload a) throws NotFoundException {
+	//		Address addressFound = this.readById(id);
+	//
+	//		addressFound.setId(id);
+	//		addressFound.setStreet(a.getStreet());
+	//		addressFound.setCity(a.getCity());
+	//		addressFound.setProvince(a.getProvince());
+	//		addressFound.setPostalCode(a.getPostalCode());
+	//		addressFound.setUser(userService.findById(a.getUser()));
+	//
+	//		return addressRepo.save(addressFound);
 	//	}
 
 	//***** UPDATE *****
-	public Address update(UUID id, AddressCreatePayload ds) throws NotFoundException {
-		Address addressFound = this.readById(id);
+	public Address updateById(UUID userId, UUID addressId, AddressCreatePayload a) throws NotFoundException {
+		Address addressFound = this.readById(addressId);
 
-		addressFound.setId(id);
+		addressFound.setId(addressId);
+		addressFound.setStreet(a.getStreet());
+		addressFound.setCity(a.getCity());
+		addressFound.setProvince(a.getProvince());
+		addressFound.setPostalCode(a.getPostalCode());
+		addressFound.setUser(userService.findById(userId));
 
 		return addressRepo.save(addressFound);
 	}
 
 	//***** DELETE *****
-	public void delete(UUID id) throws NotFoundException {
+	public void deleteById(UUID id) throws NotFoundException {
 		Address addressFound = this.readById(id);
 
 		addressRepo.delete(addressFound);

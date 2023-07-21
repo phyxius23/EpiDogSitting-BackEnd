@@ -2,9 +2,13 @@ package org.antoniotrentin.epidogsitting.entities;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,13 +27,19 @@ public class Address {
 	private String street;
 	private String city;
 	private String province;
-	private int postalCode;
+	private String postalCode;
+
+	@OneToOne
+	@JoinColumn(name = "user_id")
+	@JsonIgnore
+	private User user;
 
 	// costruttore
-	public Address(String street, String city, String province, int postalCode) {
+	public Address(String street, String city, String province, String postalCode, User user) {
 		this.street = street;
 		this.city = city;
 		this.province = province;
 		this.postalCode = postalCode;
+		this.user = user;
 	}
 }

@@ -1,5 +1,7 @@
 package org.antoniotrentin.epidogsitting.services;
 
+import java.util.UUID;
+
 import org.antoniotrentin.epidogsitting.entities.User;
 import org.antoniotrentin.epidogsitting.exceptions.NotFoundException;
 import org.antoniotrentin.epidogsitting.repositories.UserRepository;
@@ -30,9 +32,9 @@ public class UserService {
 	//		return userRepo.findAll(pageable);
 	//	}
 
-	//	public User findById(UUID id) throws NotFoundException {
-	//		return userRepo.findById(id).orElseThrow(() -> new NotFoundException("Utente con Id:" + id + "non trovato!!"));
-	//	}
+	public User findById(UUID id) throws NotFoundException {
+		return userRepo.findById(id).orElseThrow(() -> new NotFoundException("Utente con Id:" + id + " non trovato!!"));
+	}
 	//
 	//	public User findByEmail(String email) throws NotFoundException {
 	//		return userRepo.findByEmail(email)
@@ -45,7 +47,7 @@ public class UserService {
 	//	}
 
 	public User findByEmail(String email) throws NotFoundException {
-		return userRepo.findByEmail(email).orElseThrow(() -> new NotFoundException("Utente:" + email + "non trovato!!"));
+		return userRepo.findByEmail(email).orElseThrow(() -> new NotFoundException("Utente:" + email + " non trovato!!"));
 	}
 
 	//	public User findByIdAndUpdate(UUID id, User u) throws NotFoundException {
