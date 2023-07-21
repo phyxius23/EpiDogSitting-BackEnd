@@ -49,7 +49,7 @@ public class DogSitterController {
 	//***** READ *****
 	@GetMapping("")
 	public Page<DogSitter> readDogSitters(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy,
+			@RequestParam(defaultValue = "5") int size, @RequestParam(defaultValue = "id") String sortBy,
 			@RequestParam(defaultValue = "") String postalCode, @RequestParam(defaultValue = "") String name,
 			@RequestParam(defaultValue = "") OfferingType offeringType) {
 		return dogSitterService.readAll(page, size, sortBy, postalCode, name, offeringType);
