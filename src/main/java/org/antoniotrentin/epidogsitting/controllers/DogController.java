@@ -40,19 +40,19 @@ public class DogController {
 	}
 
 	//read by Id
-	@GetMapping("/{id}")
-	public Dog readDog(@PathVariable UUID id) throws Exception {
-		return dogService.readById(id);
+	@GetMapping("/{dogId}")
+	public Dog readDog(@PathVariable UUID dogId) throws Exception {
+		return dogService.readById(dogId);
 	}
 
-	//read TEST
-	@GetMapping("/test")
-	public String readDogTest() {
-		return "Endpoint di Dog funzionante!!!";
-	}
+	//	//read TEST
+	//	@GetMapping("/test")
+	//	public String readDogTest() {
+	//		return "Endpoint di Dog funzionante!!!";
+	//	}
 
-	//	//***** UPDATE *****
-	//	@PutMapping("/{id}")
+	//***** UPDATE *****
+	//	@PutMapping("/update/{id}")
 	//	public Dog updateDog(@PathVariable UUID id, @RequestBody @Validated DogCreatePayload body) throws Exception {
 	//		return dogService.updateById(id, body);
 	//	}

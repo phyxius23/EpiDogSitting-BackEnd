@@ -151,17 +151,17 @@ public class DogOwnerController {
 	 */
 
 	//***** CREATE *****
-	@PostMapping("/{userId}/dog")
+	@PostMapping("/{dogownerId}/dog")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Dog createDog(@PathVariable UUID userId, @RequestBody @Validated DogCreatePayload body) {
-		return dogService.create(userId, body);
+	public Dog createDog(@PathVariable UUID dogownerId, @RequestBody @Validated DogCreatePayload body) {
+		return dogService.create(dogownerId, body);
 	}
 
 	//***** UPDATE *****
-	@PutMapping("/{userId}/dog/{dogId}")
-	public Dog updateDog(@PathVariable UUID userId, @PathVariable UUID dogId,
+	@PutMapping("/{dogownerId}/dog/{dogId}")
+	public Dog updateDog(@PathVariable UUID dogownerId, @PathVariable UUID dogId,
 			@RequestBody @Validated DogCreatePayload body) throws Exception {
-		return dogService.updateById(userId, dogId, body);
+		return dogService.updateById(dogownerId, dogId, body);
 	}
 
 	/**
