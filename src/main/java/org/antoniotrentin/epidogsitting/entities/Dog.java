@@ -38,7 +38,7 @@ public class Dog {
 	@JsonBackReference
 	private DogOwner dogOwner;
 
-	@OneToOne(mappedBy = "dog", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "dog", cascade = CascadeType.REMOVE)
 	private Image image;
 
 	// costruttore

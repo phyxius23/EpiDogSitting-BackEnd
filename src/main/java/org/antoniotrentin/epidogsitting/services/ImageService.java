@@ -15,25 +15,75 @@ import org.springframework.transaction.annotation.Transactional;
 public class ImageService {
 
 	@Autowired
-	ImageRepository imageRepository;
+	ImageRepository imageRepo;
 
+	//	// ***** READ *****
+	//	// read by Id
+	//	public Image readById(UUID id) throws NotFoundException {
+	//		return imageRepo.findById(id).orElseThrow(() -> new NotFoundException("Immagine non trovata"));
+	//	}
+	//
+	//	//***** DELETE *****
+	//	public void deleteById(UUID id) throws NotFoundException {
+	//		Image imageFound = this.readById(id);
+	//
+	//		imageRepo.delete(imageFound);
+	//	}
+
+	//	//***** CREATE *****
+	//	@PostMapping("/{id}")
+	//	@ResponseStatus(HttpStatus.CREATED)
+	//	public Image createImage(@PathVariable UUID id, @RequestBody @Validated ImageCreatePayload body) {
+	//		return addressService.create(id, body);
+	//	}
+	//
+	//	//***** READ *****
+	//	@GetMapping("")
+	//	public Page<Image> readImage(@RequestParam(defaultValue = "0") int page,
+	//			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
+	//		return addressService.readAll(page, size, sortBy);
+	//	}
+	//
+	//	//read by Id
+	//	@GetMapping("/{id}")
+	//	public Image readImage(@PathVariable UUID id) throws Exception {
+	//		return addressService.readById(id);
+	//	}
+	//
+	//
+	//	//	//***** UPDATE *****
+	//	//	@PutMapping("/{id}")
+	//	//	public Address updateAddress(@PathVariable UUID id, @RequestBody @Validated AddressCreatePayload body)
+	//	//			throws Exception {
+	//	//		return addressService.updateById(id, body);
+	//	//	}
+	//
+	//	//***** DELETE *****
+	//	@DeleteMapping("/{id}")
+	//	@ResponseStatus(HttpStatus.NO_CONTENT)
+	//	public void deleteImage(@PathVariable UUID id) throws NotFoundException {
+	//		addressService.deleteById(id);
+	//	}
+
+	//	QUI SOTTO GIACIONO LE FUNZIONI EREDITATE
+	//
 	public List<Image> list() {
-		return imageRepository.findByOrderById();
+		return imageRepo.findByOrderById();
 	}
 
 	public Optional<Image> getOne(UUID id) {
-		return imageRepository.findById(id);
+		return imageRepo.findById(id);
 	}
 
 	public Image save(Image image) {
-		return imageRepository.save(image);
+		return imageRepo.save(image);
 	}
 
 	public void delete(UUID id) {
-		imageRepository.deleteById(id);
+		imageRepo.deleteById(id);
 	}
 
 	public boolean exists(UUID id) {
-		return imageRepository.existsById(id);
+		return imageRepo.existsById(id);
 	}
 }
