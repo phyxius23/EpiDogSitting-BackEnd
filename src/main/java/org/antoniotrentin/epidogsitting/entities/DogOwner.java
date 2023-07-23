@@ -23,8 +23,8 @@ public class DogOwner extends User {
 
 	//@JsonManagedReference
 	//@JsonBackReference
-	@OneToMany(mappedBy = "dogOwner", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	//(mappedBy = "dogOwner")
+	@OneToMany(mappedBy = "dogOwner", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@JsonManagedReference
 	private List<Dog> dogs;
 

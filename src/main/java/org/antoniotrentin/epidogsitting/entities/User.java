@@ -41,10 +41,10 @@ public abstract class User implements UserDetails {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private Address address;
 
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private Image image;
 
 	public User(String name, String surname, String email, String password) {

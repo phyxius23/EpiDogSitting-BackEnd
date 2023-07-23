@@ -6,6 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
@@ -21,7 +22,8 @@ import lombok.Setter;
 @Table(name = "dogsitters")
 public class DogSitter extends User {
 
-	//	private String description;
+	@Column(columnDefinition = "text")
+	private String description;
 
 	//	@OneToMany(mappedBy = "dogSitter", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	//	@JsonManagedReference

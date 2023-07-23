@@ -56,11 +56,11 @@ public class AddressController {
 		return addressService.readById(id);
 	}
 
-	//read TEST
-	@GetMapping("/test")
-	public String readAddressTest() {
-		return "Endpoint di Address funzionante!!!";
-	}
+	//	//read TEST
+	//	@GetMapping("/test")
+	//	public String readAddressTest() {
+	//		return "Endpoint di Address funzionante!!!";
+	//	}
 
 	//	//***** UPDATE *****
 	//	@PutMapping("/{id}")
