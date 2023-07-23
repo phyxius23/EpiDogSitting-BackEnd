@@ -8,8 +8,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-//@Getter
-//@Setter
 @Data
 public class BookingCreatePayload {
 

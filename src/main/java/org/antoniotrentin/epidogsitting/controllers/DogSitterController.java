@@ -83,12 +83,6 @@ public class DogSitterController {
 		return "Endpoint di DogSitter funzionante!!!";
 	}
 
-	//	@GetMapping("/{postalCode}")
-	//	public ResponseEntity<List<DogSitter>> getUsersByCap(@PathVariable String postalCode) {
-	//		List<DogSitter> dogSitters = dogSitterService.findByAddressPostalCode(postalCode);
-	//		return ResponseEntity.ok(dogSitters);
-	//	}
-
 	//***** UPDATE *****
 	@PutMapping("/{id}")
 	public DogSitter updateDogSitter(@PathVariable UUID id, @RequestBody @Validated DogSitterCreatePayload body)
@@ -102,5 +96,4 @@ public class DogSitterController {
 	public void deleteDogSitter(@PathVariable UUID id) throws Exception {
 		dogSitterService.deleteById(id);
 	}
-
 }

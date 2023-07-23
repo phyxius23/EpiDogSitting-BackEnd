@@ -190,5 +190,4 @@ public class DogOwnerController {
 
 		return new ResponseEntity(ImageSaved, HttpStatus.OK);
 	}
-
 }

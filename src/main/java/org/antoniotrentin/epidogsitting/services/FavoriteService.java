@@ -30,7 +30,6 @@ public class FavoriteService {
 	public Favorite create(UUID dogOwnerId, String dogSitterId) {
 
 		DogOwner dogOwnerFound = dogOwnerService.readById(dogOwnerId);
-		//		DogSitter dogSitterFound = dogSitterService.readById(dogSitterId);
 
 		Favorite newFavorite = new Favorite(dogSitterId, dogOwnerFound);
 
@@ -52,7 +51,6 @@ public class FavoriteService {
 	// read by dogownerId
 	public List<Favorite> readByDogOwner(UUID dogOwnerId) {
 
-		//		UUID dogOwnerUUID = UUID.fromString(dogOwnerId);
 		return favoriteRepo.findByDogOwnerId(dogOwnerId);
 	}
 
@@ -60,18 +58,6 @@ public class FavoriteService {
 	public Favorite readById(UUID id) throws NotFoundException {
 		return favoriteRepo.findById(id).orElseThrow(() -> new NotFoundException("Preferito non trovato"));
 	}
-
-	//***** UPDATE *****
-	//	public Favorite updateById(UUID id, FavoritePayload f) throws NotFoundException {
-	//		Favorite favoriteFound = this.readById(id);
-	//
-	//		favoriteFound.setId(id);
-	//		
-	//		//favoriteFound.setDogSitter(favoriteRepo.findById(f.getDogSitter()));
-	//		//favoriteFound.setDogOwner(favoriteRepo.findById(f.getDogOwner()));	
-	//
-	//		return favoriteRepo.save(favoriteFound);
-	//	}
 
 	//***** DELETE *****
 	public void deleteById(UUID id) throws NotFoundException {

@@ -25,13 +25,6 @@ public class DogController {
 	@Autowired
 	DogService dogService;
 
-	//	//***** CREATE *****
-	//	@PostMapping("")
-	//	@ResponseStatus(HttpStatus.CREATED)
-	//	public Dog createDog(@RequestBody @Validated DogCreatePayload body) {
-	//		return dogService.create(body);
-	//	}
-
 	//***** READ *****
 	@GetMapping("")
 	public Page<Dog> readDogs(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
@@ -45,23 +38,10 @@ public class DogController {
 		return dogService.readById(dogId);
 	}
 
-	//	//read TEST
-	//	@GetMapping("/test")
-	//	public String readDogTest() {
-	//		return "Endpoint di Dog funzionante!!!";
-	//	}
-
-	//***** UPDATE *****
-	//	@PutMapping("/update/{id}")
-	//	public Dog updateDog(@PathVariable UUID id, @RequestBody @Validated DogCreatePayload body) throws Exception {
-	//		return dogService.updateById(id, body);
-	//	}
-
 	//***** DELETE *****
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteDog(@PathVariable UUID id) throws NotFoundException {
 		dogService.deleteById(id);
 	}
-
 }

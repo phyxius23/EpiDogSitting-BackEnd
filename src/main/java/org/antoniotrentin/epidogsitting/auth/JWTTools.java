@@ -28,20 +28,12 @@ public class JWTTools {
 		expiration = Integer.parseInt(expirationInDays) * 24 * 60 * 60 * 1000;
 	}
 
-	// il metodo getUsername usato mi prende il valore dell'email
 	static public String createToken(User u) {
 		String token = Jwts.builder().setSubject(u.getUsername()).setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + expiration))
 				.signWith(Keys.hmacShaKeyFor(secret.getBytes())).compact();
 		return token;
 	}
-
-	//	static public String createToken(User u) {
-	//		String token = Jwts.builder().setSubject(u.getEmail()).setIssuedAt(new Date(System.currentTimeMillis()))
-	//				.setExpiration(new Date(System.currentTimeMillis() + expiration))
-	//				.signWith(Keys.hmacShaKeyFor(secret.getBytes())).compact();
-	//		return token;
-	//	}
 
 	static public void isTokenValid(String token) {
 		try {

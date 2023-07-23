@@ -15,7 +15,6 @@ public class ReviewCreatePayload {
 	@NotNull(message = "L'età è obbligatoria")
 	@Min(1)
 	@Max(5)
-	//@Size(min = 1, max = 5, message = "Valutazione min 1, massimo 5")
 	int rate;
 	@NotNull(message = "Il commento è obbligatorio")
 	String comment;

@@ -24,10 +24,6 @@ public class Favorite {
 	@GeneratedValue
 	private UUID id;
 
-	//	@ManyToOne
-	//	@JsonBackReference
-	//	private DogSitter dogSitter;
-
 	private String dogSitter;
 
 	@ManyToOne

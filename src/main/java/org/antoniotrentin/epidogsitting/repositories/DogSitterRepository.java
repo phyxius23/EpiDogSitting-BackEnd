@@ -34,21 +34,4 @@ public interface DogSitterRepository extends JpaRepository<DogSitter, UUID> {
 	Page<DogSitter> findByByAddressPostalCodeByOfferingType(@Param("postalCode") String postalCode,
 			@Param("offeringType") OfferingType offeringType, Pageable pageable);
 
-	//Page<DogSitter> findByAddressPostalCode(String postalCode);
-
-	//Page<DogSitter> findByAddressContaining(@Nullable Address address, Pageable pageable);
-
-	//List<DogSitter> findByAddressPostalCode(String postalCode);
-
-	//	Page<DogSitter> findByOfferingType(String type, Pageable pageable);
-
-	//	@Query("SELECT d FROM DogSitter d JOIN d.offerings o WHERE o.type = :offeringType")
-	//	Page<DogSitter> findByOfferingType(@Param("offeringType") OfferingType offeringType, Pageable pageable);
-
-	//	@Query("SELECT d FROM DogSitter d JOIN d.offerings o WHERE o.type = :offeringType")
-	//  @Query("SELECT d FROM DogSitter d JOIN d.offerings o WHERE o.type = :offeringType IN (SELECT d FROM DogSitter d JOIN d.address a WHERE a.postalCode = :postalCode)")
-	//	@Query("SELECT d FROM DogSitter d JOIN d.offerings o JOIN d.address a WHERE a.postalCode = :postalCode AND o.type = :offeringType")
-	//	Page<DogSitter> findByByAddressPostalCodeByOfferingType(@Param("postalCode") String postalCode,
-	//			@Param("offeringType") OfferingType offeringType, Pageable pageable);
-
 }

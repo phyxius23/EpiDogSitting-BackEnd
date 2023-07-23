@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Value;
 
 import jakarta.persistence.AttributeConverter;
 
-//@Component
 public class CodeConverter implements AttributeConverter<String, String> {
 	private static final String ALGORITHM = "AES/ECB/PKCS5Padding";
 	private static String secret;

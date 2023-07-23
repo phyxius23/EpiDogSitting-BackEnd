@@ -55,21 +55,7 @@ public class CloudinaryController {
 		return new ResponseEntity(list, HttpStatus.OK);
 	}
 
-	//	@PostMapping("/upload")
-	//	public ResponseEntity<?> upload(@RequestParam MultipartFile multipartFile) throws IOException {
-	//		BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
-	//		if (bi == null) {
-	//			return new ResponseEntity(new Message("Immagine non valida"), HttpStatus.BAD_REQUEST);
-	//		}
-	//		Map result = cloudinaryService.upload(multipartFile);
-	//		Image image = new Image((String) result.get("original_filename"), (String) result.get("url"),
-	//				(String) result.get("public_id"));
-	//		imageService.save(image);
-	//		return new ResponseEntity(new Message("Immagine salvata"), HttpStatus.OK);
-	//	}
-
 	//***** CREATE *****
-	//	@PostMapping("/{userId}/{dogId}/image/upload")
 	@PostMapping("/{dogId}/image/upload")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<?> uploadImage(@PathVariable UUID dogId,
@@ -104,7 +90,6 @@ public class CloudinaryController {
 		Image imageFounded = imageService.getOne(imageId).get();
 		Map resultDelete = cloudinaryService.delete(imageFounded.getImageId());
 		imageService.delete(imageId);
-		//return new ResponseEntity(new Message("L'immagine è stata eliminata"), HttpStatus.OK);
 
 		// qui mi occupo del salvataggio della nuova immagine	
 		BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
@@ -114,7 +99,6 @@ public class CloudinaryController {
 		}
 		Map resultCreate = cloudinaryService.upload(multipartFile);
 
-		//		DogOwner dogOwnerFound = dogOwnerService.readById(userId);
 		Dog dogFound = dogService.readById(dogId);
 
 		Image image = new Image((String) resultCreate.get("original_filename"), (String) resultCreate.get("url"),
@@ -134,5 +118,4 @@ public class CloudinaryController {
 		imageService.delete(imageId);
 		return new ResponseEntity(new Message("L'immagine è stata eliminata"), HttpStatus.OK);
 	}
-
 }

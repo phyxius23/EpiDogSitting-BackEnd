@@ -21,25 +21,19 @@ import lombok.Setter;
 @Table(name = "dogowners")
 public class DogOwner extends User {
 
-	//@JsonManagedReference
-	//@JsonBackReference
-	//(mappedBy = "dogOwner")
 	@OneToMany(mappedBy = "dogOwner", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@JsonManagedReference
 	private List<Dog> dogs;
 
 	@OneToMany(mappedBy = "dogOwner", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-	//(mappedBy = "dogOwner")
 	@JsonManagedReference
 	private List<Favorite> favorites;
 
 	@OneToMany(mappedBy = "dogOwner", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-	//(mappedBy = "dogOwner")
 	@JsonManagedReference
 	private List<Review> reviews;
 
 	@OneToMany(mappedBy = "dogOwner", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-	//(mappedBy = "dogOwner")
 	@JsonManagedReference
 	private List<Booking> bookings;
 
@@ -52,5 +46,4 @@ public class DogOwner extends User {
 		this.reviews = new ArrayList<>();
 		this.bookings = new ArrayList<>();
 	}
-
 }
