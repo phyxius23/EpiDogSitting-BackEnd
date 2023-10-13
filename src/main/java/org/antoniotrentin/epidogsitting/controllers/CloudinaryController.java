@@ -55,10 +55,10 @@ public class CloudinaryController {
 		return new ResponseEntity(list, HttpStatus.OK);
 	}
 
-	//***** CREATE *****
+	//***** CREATE IMAGE TO DOG *****
 	@PostMapping("/{dogId}/image/upload")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?> uploadImage(@PathVariable UUID dogId,
+	public ResponseEntity<?> uploadImageDog(@PathVariable UUID dogId,
 			@RequestParam("multipartFile") MultipartFile multipartFile) throws IOException {
 		BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
 
@@ -78,7 +78,7 @@ public class CloudinaryController {
 		return new ResponseEntity(ImageSaved, HttpStatus.OK);
 	}
 
-	//***** UPDATE *****
+	//***** UPDATE IMAGE TO DOG *****
 	@PutMapping("/{dogId}/update/{imageId}/image/upload")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<?> updateImage(@PathVariable UUID dogId, @PathVariable("imageId") UUID imageId,
@@ -87,8 +87,11 @@ public class CloudinaryController {
 		// qui mi occupo della cancellazione della precedente immagine
 		if (!imageService.exists(imageId))
 			return new ResponseEntity(new Message("L'immagine non esiste"), HttpStatus.NOT_FOUND);
+
 		Image imageFounded = imageService.getOne(imageId).get();
+
 		Map resultDelete = cloudinaryService.delete(imageFounded.getImageId());
+
 		imageService.delete(imageId);
 
 		// qui mi occupo del salvataggio della nuova immagine	
@@ -111,11 +114,16 @@ public class CloudinaryController {
 	//***** DELETE *****
 	@DeleteMapping("/delete/{imageId}")
 	public ResponseEntity<?> delete(@PathVariable("imageId") UUID imageId) throws IOException {
+
 		if (!imageService.exists(imageId))
 			return new ResponseEntity(new Message("L'immagine non esiste"), HttpStatus.NOT_FOUND);
+
 		Image image = imageService.getOne(imageId).get();
+
 		Map result = cloudinaryService.delete(image.getImageId());
+
 		imageService.delete(imageId);
+
 		return new ResponseEntity(new Message("L'immagine è stata eliminata"), HttpStatus.OK);
 	}
 }

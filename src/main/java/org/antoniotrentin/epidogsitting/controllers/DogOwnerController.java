@@ -2,6 +2,7 @@ package org.antoniotrentin.epidogsitting.controllers;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -13,7 +14,6 @@ import org.antoniotrentin.epidogsitting.entities.DogOwner;
 import org.antoniotrentin.epidogsitting.entities.Image;
 import org.antoniotrentin.epidogsitting.entities.User;
 import org.antoniotrentin.epidogsitting.entities.payloads.AddressCreatePayload;
-import org.antoniotrentin.epidogsitting.entities.payloads.DogCreatePayload;
 import org.antoniotrentin.epidogsitting.entities.payloads.DogOwnerCreatePayload;
 import org.antoniotrentin.epidogsitting.entities.payloads.Message;
 import org.antoniotrentin.epidogsitting.exceptions.NotFoundException;
@@ -75,29 +75,27 @@ public class DogOwnerController {
 	 * *** ********* DOGOWNER ********* ***
 	 */
 
-	//***** CREATE *****
+	//***** CREATE DOGOWNER ***** testata ok
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)
 	public DogOwner createDogOwner(@RequestBody @Validated DogOwnerCreatePayload body) {
 		return dogOwnerService.create(body);
 	}
 
-	//***** READ *****
-
-	// read all
+	//***** READ ALL DOGOWNER WITH PAGINATION *****
 	@GetMapping("")
 	public Page<DogOwner> readDogOwners(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
 		return dogOwnerService.readAll(page, size, sortBy);
 	}
 
-	//read by Id
+	//***** READ DOGOWNER BY ID *****
 	@GetMapping("/{id}")
 	public DogOwner readDogOwner(@PathVariable UUID id) throws Exception {
 		return dogOwnerService.readById(id);
 	}
 
-	//read myProfile
+	//***** READ PROFILE USER LOGGED ***** testata ok
 	@GetMapping("/me")
 	public ResponseEntity<User> getUserProfile() {
 
@@ -112,14 +110,14 @@ public class DogOwnerController {
 		return ResponseEntity.ok(user);
 	}
 
-	//***** UPDATE *****
+	//***** UPDATE DOGOWNER BY ID *****
 	@PutMapping("/{id}")
 	public DogOwner updateDogOwner(@PathVariable UUID id, @RequestBody @Validated DogOwnerCreatePayload body)
 			throws Exception {
 		return dogOwnerService.updateById(id, body);
 	}
 
-	//***** DELETE *****
+	//***** DELETE DOGOWNER BY ID *****
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteDogOwner(@PathVariable UUID id) throws NotFoundException {
@@ -145,41 +143,86 @@ public class DogOwnerController {
 		return addressService.updateById(userId, addressId, body);
 	}
 
-	/**
-	 * *** CREATE, READ, UPDATE, DELETE ***
-	 * *** *********** DOG ************ ***
-	 */
+	/**** *********** DOG ************ ****/
+	/**************************************/
 
-	//***** CREATE *****
-	@PostMapping("/{dogownerId}/dog")
-	@ResponseStatus(HttpStatus.CREATED)
-	public Dog createDog(@PathVariable UUID dogownerId, @RequestBody @Validated DogCreatePayload body) {
-		return dogService.create(dogownerId, body);
+	//***** READ DOGS FROM LOGGED DOGOWNER ***** -> testata ok
+	@GetMapping("/me/dogs")
+	public List<Dog> readDogsByDogOwnerId() {
+
+		// Recupera l'utente corrente dal sistema di autenticazione
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String email = authentication.getName();
+
+		// Recupera i dettagli dell'utente dal database o da un altro servizio
+		UUID userId = userService.findByEmail(email).getId();
+
+		return dogService.readByDogOwnerId(userId);
 	}
+
+	//***** CREATE DOG TO LOGGED DOGOWNER *****
+	//	@PostMapping("/{dogownerId}/dog")
+	//	@ResponseStatus(HttpStatus.CREATED)
+	//	public Dog createDog(@PathVariable UUID dogownerId, @RequestBody @Validated DogCreatePayload body) {
+	//		return dogService.create(dogownerId, body);
+	//	}
+
+	//	@PostMapping("/me/dog")
+	//	@ResponseStatus(HttpStatus.CREATED)
+	//	public Dog createDog(@PathVariable UUID dogownerId, @RequestBody @Validated DogCreatePayload body) {
+	//		return dogService.create(dogownerId, body);
+	//	}
 
 	//***** UPDATE *****
-	@PutMapping("/{dogownerId}/dog/{dogId}")
-	public Dog updateDog(@PathVariable UUID dogownerId, @PathVariable UUID dogId,
-			@RequestBody @Validated DogCreatePayload body) throws Exception {
-		return dogService.updateById(dogownerId, dogId, body);
-	}
+	//	@PutMapping("/{dogownerId}/dog/{dogId}")
+	//	public Dog updateDog(@PathVariable UUID dogownerId, @PathVariable UUID dogId,
+	//			@RequestBody @Validated DogCreatePayload body) throws Exception {
+	//		return dogService.updateById(dogownerId, dogId, body);
+	//	}
 
-	/**
-	 * *** CREATE, READ, UPDATE, DELETE ***
-	 * *** ********* IMAGE **********
-	 */
+	/**** *********** IMAGE ************ ****/
+	/****************************************/
 
-	//***** CREATE *****
-	@PostMapping("/{userId}/image/upload")
+	//***** CREATE IMAGE *****
+	//	@PostMapping("/{userId}/image/upload")
+	//	@ResponseStatus(HttpStatus.CREATED)
+	//	public ResponseEntity<?> uploadImage(@PathVariable UUID userId,
+	//			@RequestParam("multipartFile") MultipartFile multipartFile) throws IOException {
+	//		BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
+	//
+	//		if (bi == null) {
+	//			return new ResponseEntity(new Message("Immagine non valida"), HttpStatus.BAD_REQUEST);
+	//		}
+	//		Map result = cloudinaryService.upload(multipartFile);
+	//
+	//		User userFound = userService.findById(userId);
+	//
+	//		Image image = new Image((String) result.get("original_filename"), (String) result.get("url"),
+	//				(String) result.get("public_id"), userFound);
+	//		Image ImageSaved = imageService.save(image);
+	//		System.out.println(image);
+	//
+	//		return new ResponseEntity(ImageSaved, HttpStatus.OK);
+	//	}
+
+	//***** CREATE IMAGE PROFILE TO USER *****
+	@PostMapping("/me/image/upload")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?> uploadImage(@PathVariable UUID userId,
-			@RequestParam("multipartFile") MultipartFile multipartFile) throws IOException {
+	public ResponseEntity<?> uploadImageProfile(@RequestParam("multipartFile") MultipartFile multipartFile)
+			throws IOException {
 		BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
 
 		if (bi == null) {
 			return new ResponseEntity(new Message("Immagine non valida"), HttpStatus.BAD_REQUEST);
 		}
 		Map result = cloudinaryService.upload(multipartFile);
+
+		// Recupera l'utente corrente dal sistema di autenticazione
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String email = authentication.getName();
+
+		// Recupera i dettagli dell'utente dal database o da un altro servizio
+		UUID userId = userService.findByEmail(email).getId();
 
 		User userFound = userService.findById(userId);
 
