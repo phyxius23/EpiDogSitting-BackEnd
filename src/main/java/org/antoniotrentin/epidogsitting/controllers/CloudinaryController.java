@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -54,24 +55,10 @@ public class CloudinaryController {
 		return new ResponseEntity(list, HttpStatus.OK);
 	}
 
-	//	@PostMapping("/upload")
-	//	public ResponseEntity<?> upload(@RequestParam MultipartFile multipartFile) throws IOException {
-	//		BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
-	//		if (bi == null) {
-	//			return new ResponseEntity(new Message("Immagine non valida"), HttpStatus.BAD_REQUEST);
-	//		}
-	//		Map result = cloudinaryService.upload(multipartFile);
-	//		Image image = new Image((String) result.get("original_filename"), (String) result.get("url"),
-	//				(String) result.get("public_id"));
-	//		imageService.save(image);
-	//		return new ResponseEntity(new Message("Immagine salvata"), HttpStatus.OK);
-	//	}
-
-	//***** CREATE *****
-	//	@PostMapping("/{userId}/{dogId}/image/upload")
+	//***** CREATE IMAGE TO DOG *****
 	@PostMapping("/{dogId}/image/upload")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?> uploadImage(@PathVariable UUID dogId,
+	public ResponseEntity<?> uploadImageDog(@PathVariable UUID dogId,
 			@RequestParam("multipartFile") MultipartFile multipartFile) throws IOException {
 		BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
 
@@ -91,14 +78,52 @@ public class CloudinaryController {
 		return new ResponseEntity(ImageSaved, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> delete(@PathVariable("id") UUID id) throws IOException {
-		if (!imageService.exists(id))
+	//***** UPDATE IMAGE TO DOG *****
+	@PutMapping("/{dogId}/update/{imageId}/image/upload")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<?> updateImage(@PathVariable UUID dogId, @PathVariable("imageId") UUID imageId,
+			@RequestParam("multipartFile") MultipartFile multipartFile) throws IOException {
+
+		// qui mi occupo della cancellazione della precedente immagine
+		if (!imageService.exists(imageId))
 			return new ResponseEntity(new Message("L'immagine non esiste"), HttpStatus.NOT_FOUND);
-		Image image = imageService.getOne(id).get();
-		Map result = cloudinaryService.delete(image.getImageId());
-		imageService.delete(id);
-		return new ResponseEntity(new Message("L'immagine è stata eliminata"), HttpStatus.OK);
+
+		Image imageFounded = imageService.getOne(imageId).get();
+
+		Map resultDelete = cloudinaryService.delete(imageFounded.getImageId());
+
+		imageService.delete(imageId);
+
+		// qui mi occupo del salvataggio della nuova immagine	
+		BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
+
+		if (bi == null) {
+			return new ResponseEntity(new Message("Immagine non valida"), HttpStatus.BAD_REQUEST);
+		}
+		Map resultCreate = cloudinaryService.upload(multipartFile);
+
+		Dog dogFound = dogService.readById(dogId);
+
+		Image image = new Image((String) resultCreate.get("original_filename"), (String) resultCreate.get("url"),
+				(String) resultCreate.get("public_id"), dogFound);
+		Image ImageSaved = imageService.save(image);
+
+		return new ResponseEntity(ImageSaved, HttpStatus.OK);
 	}
 
+	//***** DELETE *****
+	@DeleteMapping("/delete/{imageId}")
+	public ResponseEntity<?> delete(@PathVariable("imageId") UUID imageId) throws IOException {
+
+		if (!imageService.exists(imageId))
+			return new ResponseEntity(new Message("L'immagine non esiste"), HttpStatus.NOT_FOUND);
+
+		Image image = imageService.getOne(imageId).get();
+
+		Map result = cloudinaryService.delete(image.getImageId());
+
+		imageService.delete(imageId);
+
+		return new ResponseEntity(new Message("L'immagine è stata eliminata"), HttpStatus.OK);
+	}
 }

@@ -58,7 +58,6 @@ public class OfferingService {
 
 	//***** UPDATE *****
 	public Offering updateById(UUID id, OfferingCreatePayload o) throws NotFoundException {
-		//DogSitter dogSitterFound = dogSitterService.readById(o.getDogSitter());
 
 		Offering offeringFound = this.readById(id);
 

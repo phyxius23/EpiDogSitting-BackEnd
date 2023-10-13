@@ -16,25 +16,6 @@ import com.cloudinary.utils.ObjectUtils;
 public class CloudinaryService {
 
 	Cloudinary cloudinary;
-	//  codice per rendere private le chiavi di cloudinary (non funziona => forse perchè sto in un service?)
-	//	private String cloudName;
-	//	private static String apiKey;
-	//	private static String apiSecret;
-	//
-	//	@Value("${spring.application.cloudinary.cloud_name}")
-	//	public void setCloudName(String cn) {
-	//		cloudName = cn;
-	//	}
-	//
-	//	@Value("${spring.application.cloudinary.api_key}")
-	//	public void setApiKey(String ak) {
-	//		apiKey = ak;
-	//	}
-	//
-	//	@Value("${spring.application.cloudinary.api_secret}")
-	//	public void setApiSecret(String as) {
-	//		apiSecret = as;
-	//	}
 
 	private Map<String, String> valuesMap = new HashMap<>();
 

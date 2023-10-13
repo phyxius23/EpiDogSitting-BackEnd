@@ -9,5 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ImageRepository extends JpaRepository<Image, UUID> {
+
 	List<Image> findByOrderById();
+
 }

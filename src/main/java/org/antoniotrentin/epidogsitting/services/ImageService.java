@@ -15,25 +15,25 @@ import org.springframework.transaction.annotation.Transactional;
 public class ImageService {
 
 	@Autowired
-	ImageRepository imageRepository;
+	ImageRepository imageRepo;
 
 	public List<Image> list() {
-		return imageRepository.findByOrderById();
+		return imageRepo.findByOrderById();
 	}
 
 	public Optional<Image> getOne(UUID id) {
-		return imageRepository.findById(id);
+		return imageRepo.findById(id);
 	}
 
 	public Image save(Image image) {
-		return imageRepository.save(image);
+		return imageRepo.save(image);
 	}
 
 	public void delete(UUID id) {
-		imageRepository.deleteById(id);
+		imageRepo.deleteById(id);
 	}
 
 	public boolean exists(UUID id) {
-		return imageRepository.existsById(id);
+		return imageRepo.existsById(id);
 	}
 }

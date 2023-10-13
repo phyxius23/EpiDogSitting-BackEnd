@@ -23,15 +23,6 @@ public class AddressService {
 	@Autowired
 	UserService userService;
 
-	//***** CREATE *****
-	//	public Address create(AddressCreatePayload a) {
-	//		User userFound = userService.findById(a.getUser());
-	//
-	//		Address newAddress = new Address(a.getStreet(), a.getCity(), a.getProvince(), a.getPostalCode(), userFound);
-	//
-	//		return addressRepo.save(newAddress);
-	//	}
-
 	//	//***** CREATE *****
 	public Address create(UUID userId, AddressCreatePayload a) {
 		User userFound = userService.findById(userId);
@@ -57,20 +48,6 @@ public class AddressService {
 	public Address readById(UUID id) throws NotFoundException {
 		return addressRepo.findById(id).orElseThrow(() -> new NotFoundException("Indirizzo non trovato"));
 	}
-
-	//	//***** UPDATE *****
-	//	public Address updateById(UUID id, AddressCreatePayload a) throws NotFoundException {
-	//		Address addressFound = this.readById(id);
-	//
-	//		addressFound.setId(id);
-	//		addressFound.setStreet(a.getStreet());
-	//		addressFound.setCity(a.getCity());
-	//		addressFound.setProvince(a.getProvince());
-	//		addressFound.setPostalCode(a.getPostalCode());
-	//		addressFound.setUser(userService.findById(a.getUser()));
-	//
-	//		return addressRepo.save(addressFound);
-	//	}
 
 	//***** UPDATE *****
 	public Address updateById(UUID userId, UUID addressId, AddressCreatePayload a) throws NotFoundException {

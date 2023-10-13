@@ -52,12 +52,6 @@ public class BookingController {
 		return bookingService.readById(id);
 	}
 
-	//read TEST
-	@GetMapping("/test")
-	public String readBookingTest() {
-		return "Endpoint di Booking funzionante!!!";
-	}
-
 	//***** UPDATE *****
 	@PutMapping("/{id}")
 	public Booking updateBooking(@PathVariable UUID id, @RequestBody @Validated BookingCreatePayload body)
@@ -71,5 +65,4 @@ public class BookingController {
 	public void deleteBooking(@PathVariable UUID id) throws NotFoundException {
 		bookingService.deleteById(id);
 	}
-
 }

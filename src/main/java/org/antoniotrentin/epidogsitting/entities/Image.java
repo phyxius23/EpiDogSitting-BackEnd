@@ -43,9 +43,6 @@ public class Image {
 	//	@JsonBackReference
 	//	private DogSitter dogSitter;
 
-	//	public Image() {
-	//	}
-
 	public Image(String n, String iu, String ii, User u) {
 		this.name = n;
 		this.imageUrl = iu;
@@ -59,36 +56,4 @@ public class Image {
 		this.imageId = ii;
 		this.dog = d;
 	}
-
-	//	public int getId() {
-	//		return id;
-	//	}
-	//
-	//	public void setId(int id) {
-	//		this.id = id;
-	//	}
-
-	//	public String getName() {
-	//		return name;
-	//	}
-	//
-	//	public void setName(String name) {
-	//		this.name = name;
-	//	}
-	//
-	//	public String getImagenUrl() {
-	//		return imagenUrl;
-	//	}
-	//
-	//	public void setImagenUrl(String imagenUrl) {
-	//		this.imagenUrl = imagenUrl;
-	//	}
-	//
-	//	public String getImagenId() {
-	//		return imagenId;
-	//	}
-	//
-	//	public void setImagenId(String imagenId) {
-	//		this.imagenId = imagenId;
-	//	}
 }

@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/offerings")
+@RequestMapping("/api/offerings")
 @PreAuthorize("hasAuthority('DOGSITTER')")
 public class OfferingController {
 
@@ -50,12 +50,6 @@ public class OfferingController {
 		return offeringService.readById(id);
 	}
 
-	//read TEST
-	@GetMapping("/test")
-	public String readOfferingTest() {
-		return "Endpoint di Offering funzionante!!!";
-	}
-
 	//***** UPDATE *****
 	@PutMapping("/{id}")
 	public Offering updateOffering(@PathVariable UUID id, @RequestBody @Validated OfferingCreatePayload body)
@@ -69,5 +63,4 @@ public class OfferingController {
 	public void deleteOffering(@PathVariable UUID id) throws NotFoundException {
 		offeringService.deleteById(id);
 	}
-
 }

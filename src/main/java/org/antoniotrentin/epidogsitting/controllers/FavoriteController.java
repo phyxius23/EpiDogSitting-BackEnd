@@ -30,7 +30,6 @@ public class FavoriteController {
 	//***** CREATE *****
 	@PostMapping("/{dogOwnerId}/{dogSitterId}")
 	@ResponseStatus(HttpStatus.CREATED)
-	//	public Favorite createFavorite(@RequestBody @Validated FavoritePayload body) {
 	public Favorite createFavorite(@PathVariable UUID dogOwnerId, @PathVariable String dogSitterId) {
 		return favoriteService.create(dogOwnerId, dogSitterId);
 	}
@@ -53,23 +52,10 @@ public class FavoriteController {
 		return favoriteService.readById(id);
 	}
 
-	//read TEST
-	@GetMapping("/test")
-	public String readFavoriteTest() {
-		return "Endpoint di Favorite funzionante!!!";
-	}
-
-	//***** UPDATE *****
-	//	@PutMapping("/{id}")
-	//	public Favorite updateFavorite(@PathVariable UUID id, @RequestBody @Validated FavoritePayload body) throws Exception {
-	//		return favoriteService.updateById(id, body);
-	//	}
-
 	//***** DELETE *****
 	@DeleteMapping("/{favoriteId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteFavorite(@PathVariable UUID favoriteId) throws NotFoundException {
 		favoriteService.deleteById(favoriteId);
 	}
-
 }

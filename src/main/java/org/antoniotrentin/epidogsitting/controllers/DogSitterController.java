@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/dogsitters")
+@RequestMapping("/api/dogsitters")
 @PreAuthorize("hasAuthority('DOGSITTER') or hasAuthority('DOGOWNER')")
 public class DogSitterController {
 
@@ -49,7 +49,7 @@ public class DogSitterController {
 	//***** READ *****
 	@GetMapping("")
 	public Page<DogSitter> readDogSitters(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "5") int size, @RequestParam(defaultValue = "id") String sortBy,
+			@RequestParam(defaultValue = "15") int size, @RequestParam(defaultValue = "id") String sortBy,
 			@RequestParam(defaultValue = "") String postalCode, @RequestParam(defaultValue = "") String name,
 			@RequestParam(defaultValue = "") OfferingType offeringType) {
 		return dogSitterService.readAll(page, size, sortBy, postalCode, name, offeringType);
@@ -83,12 +83,6 @@ public class DogSitterController {
 		return "Endpoint di DogSitter funzionante!!!";
 	}
 
-	//	@GetMapping("/{postalCode}")
-	//	public ResponseEntity<List<DogSitter>> getUsersByCap(@PathVariable String postalCode) {
-	//		List<DogSitter> dogSitters = dogSitterService.findByAddressPostalCode(postalCode);
-	//		return ResponseEntity.ok(dogSitters);
-	//	}
-
 	//***** UPDATE *****
 	@PutMapping("/{id}")
 	public DogSitter updateDogSitter(@PathVariable UUID id, @RequestBody @Validated DogSitterCreatePayload body)
@@ -102,5 +96,4 @@ public class DogSitterController {
 	public void deleteDogSitter(@PathVariable UUID id) throws Exception {
 		dogSitterService.deleteById(id);
 	}
-
 }

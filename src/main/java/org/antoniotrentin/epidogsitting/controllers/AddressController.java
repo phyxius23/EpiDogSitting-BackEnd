@@ -29,13 +29,6 @@ public class AddressController {
 	@Autowired
 	AddressService addressService;
 
-	//***** CREATE ***** FUNZIONANTE A METÀ
-	//	@PostMapping("")
-	//	@ResponseStatus(HttpStatus.CREATED)
-	//	public Address createAddress(@RequestBody @Validated AddressCreatePayload body) {
-	//		return addressService.create(body);
-	//	}
-
 	//***** CREATE *****
 	@PostMapping("/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -56,24 +49,10 @@ public class AddressController {
 		return addressService.readById(id);
 	}
 
-	//read TEST
-	@GetMapping("/test")
-	public String readAddressTest() {
-		return "Endpoint di Address funzionante!!!";
-	}
-
-	//	//***** UPDATE *****
-	//	@PutMapping("/{id}")
-	//	public Address updateAddress(@PathVariable UUID id, @RequestBody @Validated AddressCreatePayload body)
-	//			throws Exception {
-	//		return addressService.updateById(id, body);
-	//	}
-
 	//***** DELETE *****
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteAddress(@PathVariable UUID id) throws NotFoundException {
 		addressService.deleteById(id);
 	}
-
 }

@@ -50,12 +50,6 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 		}
 	}
 
-	//	@Override
-	//	protected boolean shouldNotFilter(HttpServletRequest request) {
-	//		return new AntPathMatcher().match("/auth/**", request.getServletPath())
-	//				|| new AntPathMatcher().match("/swagger-ui/**", request.getServletPath())
-	//				|| new AntPathMatcher().match("/api-docs/**", request.getServletPath());
-	//	}
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) {
 		String[] patterns = { "/auth/**", "/swagger-ui/**", "/api-docs/**" };
@@ -70,5 +64,4 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 
 		return match;
 	}
-
 }

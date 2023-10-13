@@ -52,13 +52,6 @@ public class ReviewController {
 		return reviewService.readById(id);
 	}
 
-	//read TEST
-	@GetMapping("/test")
-	//@PostAuthorize("hasAuthority('DOGOWNER')")
-	public String readReviewTest() {
-		return "Endpoint di Review funzionante!!!";
-	}
-
 	//***** UPDATE *****
 	@PutMapping("/{id}")
 	@PostAuthorize("hasAuthority('DOGOWNER')")
@@ -73,5 +66,4 @@ public class ReviewController {
 	public void deleteReview(@PathVariable UUID id) throws NotFoundException {
 		reviewService.deleteById(id);
 	}
-
 }

@@ -1,5 +1,6 @@
 package org.antoniotrentin.epidogsitting.services;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.antoniotrentin.epidogsitting.entities.Dog;
@@ -48,6 +49,16 @@ public class DogService {
 	public Dog readById(UUID id) throws NotFoundException {
 		return dogRepo.findById(id).orElseThrow(() -> new NotFoundException("Dog non trovato"));
 	}
+
+	// read by dogOwnerId
+	public List<Dog> readByDogOwnerId(UUID dogOwnerId) throws NotFoundException {
+		List<Dog> dogs = dogRepo.findByDogOwnerId(dogOwnerId);
+		if (dogs.isEmpty()) {
+			throw new NotFoundException("Nessun dogs trovato");
+		}
+		return dogs;
+	}
+	//return dogRepo.findByDogOwnerId(dogOwnerId).orElseThrow(() -> new NotFoundException("Nessun dogs trovato"));
 
 	//***** UPDATE *****
 	public Dog updateById(UUID userId, UUID dogId, DogCreatePayload d) throws NotFoundException {

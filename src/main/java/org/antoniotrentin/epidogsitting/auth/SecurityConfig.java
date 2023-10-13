@@ -25,41 +25,29 @@ public class SecurityConfig {
 
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		//http.cors(c -> c.disable()); //=> http.cors(AbstractHttpConfigurer::disable);
-		http.csrf(c -> c.disable()); //=> http.csrf(AbstractHttpConfigurer::disable);
+		http.csrf(c -> c.disable());
+
+		//		http.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll());
+		//		http.authorizeHttpRequests(auth -> auth.requestMatchers("/swagger-ui/**").permitAll());
+		//		http.authorizeHttpRequests(auth -> auth.requestMatchers("/api-docs/**").permitAll());
+		//		http.authorizeHttpRequests(auth -> auth.requestMatchers("/addresses/**").authenticated());
+		//		http.authorizeHttpRequests(auth -> auth.requestMatchers("/bookings/**").authenticated());
+		//		http.authorizeHttpRequests(auth -> auth.requestMatchers("/dogs/**").authenticated());
+		//		http.authorizeHttpRequests(auth -> auth.requestMatchers("/dogowners/**").authenticated());
+		//		http.authorizeHttpRequests(auth -> auth.requestMatchers("/dogsitters/**").authenticated());
+		//		http.authorizeHttpRequests(auth -> auth.requestMatchers("/favorites/**").authenticated());
+		//		http.authorizeHttpRequests(auth -> auth.requestMatchers("/offerings/**").authenticated());
+		//		http.authorizeHttpRequests(auth -> auth.requestMatchers("/reviews/**").authenticated());
+		//		http.authorizeHttpRequests(auth -> auth.requestMatchers("/api/**").authenticated());
+		//		http.authorizeHttpRequests(auth -> auth.requestMatchers("/image/**").authenticated());
 
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll());
+		http.authorizeHttpRequests(auth -> auth.requestMatchers("/api/**").authenticated());
+		// testare se possibile utilizzare cloudinary con un endpoint dedicato, es: /api/image/
+		http.authorizeHttpRequests(auth -> auth.requestMatchers("/image/**").authenticated());
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/swagger-ui/**").permitAll());
 		http.authorizeHttpRequests(auth -> auth.requestMatchers("/api-docs/**").permitAll());
-		http.authorizeHttpRequests(auth -> auth.requestMatchers("/addresses/**").authenticated());
-		http.authorizeHttpRequests(auth -> auth.requestMatchers("/bookings/**").authenticated());
-		http.authorizeHttpRequests(auth -> auth.requestMatchers("/dogs/**").authenticated());
-		http.authorizeHttpRequests(auth -> auth.requestMatchers("/dogowners/**").authenticated());
-		http.authorizeHttpRequests(auth -> auth.requestMatchers("/dogsitters/**").authenticated());
-		//		http.authorizeHttpRequests(auth -> auth.requestMatchers("/dogsitters/**").permitAll());
-		http.authorizeHttpRequests(auth -> auth.requestMatchers("/favorites/**").authenticated());
-		http.authorizeHttpRequests(auth -> auth.requestMatchers("/offerings/**").authenticated());
-		http.authorizeHttpRequests(auth -> auth.requestMatchers("/reviews/**").authenticated());
-		http.authorizeHttpRequests(auth -> auth.requestMatchers("/api/**").authenticated());
-		http.authorizeHttpRequests(auth -> auth.requestMatchers("/image/**").authenticated());
 
-		//http.authorizeHttpRequests(auth -> auth.requestMatchers("/users/**").hasRole(null));
-
-		/**
-		 * MODIFICHE DA TESTARE
-		 */
-		//		http.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll());
-		//
-		//		http.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, "/addresses/**").authenticated());
-		//		http.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, "/bookings/**").authenticated());
-		//		http.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, "/dogs/**").authenticated());
-		//		http.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, "/dogowners/**").authenticated());
-		//		http.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, "/dogsitters/**").authenticated());
-		//		http.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, "/favorites/**").authenticated());
-		//		http.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, "/offerings/**").authenticated());
-		//		http.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, "/reviews/**").authenticated());
-
-		// http.addFilterBefore(exceptionHandlerFilter, JWTAuthFilter.class);
 		http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 		http.addFilterBefore(corsFilter, JWTAuthFilter.class);
 

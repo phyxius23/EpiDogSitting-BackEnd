@@ -31,14 +31,11 @@ public class Dog {
 	private int weight;
 	private String description;
 
-	//@JsonIgnore
-	//@JsonBackReference
-	//@JsonManagedReference
 	@ManyToOne
 	@JsonBackReference
 	private DogOwner dogOwner;
 
-	@OneToOne(mappedBy = "dog", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "dog", cascade = CascadeType.REMOVE)
 	private Image image;
 
 	// costruttore
